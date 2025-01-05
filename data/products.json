@@ -1,0 +1,104 @@
+[
+  {
+    "categoría": "Cuadernos",
+    "tipo": "Cuaderno",
+    "marca": "Norma",
+    "nombre": "Cuaderno Argollado",
+    "código": "CN001",
+    "modelo": "Grande",
+    "diseños": "Liso",
+    "hojas": "100",
+    "cantidadCaja": "10",
+    "img1": "/images/cuaderno-norma-grande.jpg",
+    "img2": [
+      "/images/cuaderno-norma-grande-1.jpg",
+      "/images/cuaderno-norma-grande-2.jpg"
+    ],
+    "texto": "Cuaderno argollado de alta calidad para uso escolar o de oficina."
+  },
+  {
+    "categoría": "Cuadernos",
+    "tipo": "Cuaderno",
+    "marca": "Norma",
+    "nombre": "Cuaderno Argollado",
+    "código": "CN002",
+    "modelo": "Pequeño",
+    "diseños": "Cuadriculado",
+    "hojas": "80",
+    "cantidadCaja": "12",
+    "img1": "/images/cuaderno-norma-pequeno.jpg",
+    "img2": [
+      "/images/cuaderno-norma-pequeno-1.jpg",
+      "/images/cuaderno-norma-pequeno-2.jpg"
+    ],
+    "texto": "Cuaderno argollado compacto ideal para tomar notas rápidas."
+  },
+  {
+    "categoría": "Papelería",
+    "tipo": "Grapadora",
+    "marca": "Rapid",
+    "nombre": "Grapadora de Escritorio",
+    "código": "GR001",
+    "modelo": "Estándar",
+    "diseños": "Negro",
+    "hojas": "20",
+    "cantidadCaja": "6",
+    "img1": "/images/grapadora-rapid-estandar.jpg",
+    "img2": [
+      "/images/grapadora-rapid-estandar-1.jpg",
+      "/images/grapadora-rapid-estandar-2.jpg"
+    ],
+    "texto": "Grapadora resistente para uso diario en la oficina."
+  },
+  {
+    "categoría": "Papelería",
+    "tipo": "Grapadora",
+    "marca": "Rapid",
+    "nombre": "Grapadora de Escritorio",
+    "código": "GR002",
+    "modelo": "Mini",
+    "diseños": "Azul",
+    "hojas": "10",
+    "cantidadCaja": "12",
+    "img1": "/images/grapadora-rapid-mini.jpg",
+    "img2": [
+      "/images/grapadora-rapid-mini-1.jpg",
+      "/images/grapadora-rapid-mini-2.jpg"
+    ],
+    "texto": "Grapadora compacta ideal para viajes o uso personal."
+  },
+  {
+    "categoría": "PapelTissue",
+    "tipo": "Pincel",
+    "marca": "Arteza",
+    "nombre": "Set de Pinceles",
+    "código": "PA001",
+    "modelo": "Acrílico",
+    "diseños": "Variados",
+    "hojas": "N/A",
+    "cantidadCaja": "10",
+    "img1": "/images/pinceles-arteza-acrilico.jpg",
+    "img2": [
+      "/images/pinceles-arteza-acrilico-1.jpg",
+      "/images/pinceles-arteza-acrilico-2.jpg"
+    ],
+    "texto": "Set de pinceles de alta calidad para pintura acrílica."
+  },
+  {
+    "categoría": "PapelTissue",
+    "tipo": "Pincel",
+    "marca": "Arteza",
+    "nombre": "Set de Pinceles",
+    "código": "PA002",
+    "modelo": "Acuarela",
+    "diseños": "Variados",
+    "hojas": "N/A",
+    "cantidadCaja": "12",
+    "img1": "/images/pinceles-arteza-acuarela.jpg",
+    "img2": [
+      "/images/pinceles-arteza-acuarela-1.jpg",
+      "/images/pinceles-arteza-acuarela-2.jpg"
+    ],
+    "texto": "Set de pinceles suaves ideales para técnicas de acuarela."
+  }
+]
