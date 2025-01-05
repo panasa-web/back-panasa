@@ -6,10 +6,22 @@ const productsFilePath = path.join(process.cwd(), 'data', 'products.json');
 
 export async function GET(request, { params }) {
   try {
+    const { searchParams } = new URL(request.url);
+    const productName = searchParams.get('nombre');
     const fileContents = await fs.readFile(productsFilePath, 'utf8');
     const products = JSON.parse(fileContents);
     const productCode = params.code;
 
+    // Si el código en la URL es 'search', buscar por nombre
+    if (productCode === 'search' && productName) {
+      const filteredProducts = products.filter(p => p.nombre === productName);
+      if (filteredProducts.length === 0) {
+        return NextResponse.json({ message: 'Producto no encontrado' }, { status: 404 });
+      }
+      return NextResponse.json(filteredProducts);
+    }
+
+    // Buscar por código
     if (productCode) {
       const product = products.find(p => p.código === productCode);
       if (!product) {
@@ -24,6 +36,7 @@ export async function GET(request, { params }) {
     return NextResponse.json({ message: 'Error al leer los productos' }, { status: 500 });
   }
 }
+
 
 export async function POST(request) {
   try {
