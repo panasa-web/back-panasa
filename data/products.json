@@ -100,5 +100,23 @@
       "/images/pinceles-arteza-acuarela-2.jpg"
     ],
     "texto": "Set de pinceles suaves ideales para técnicas de acuarela."
+  },
+  {
+    "categoría": "Cuadernos",
+    "tipo": "Anillado",
+    "marca": "Marca1",
+    "nombre": "brunoasda",
+    "código": "123456",
+    "modelo": "A123",
+    "diseños": "5",
+    "hojas": "20",
+    "cantidadCaja": "20",
+    "img1": "https://i.ibb.co/THK6XzR/2-2.png",
+    "img2": [
+      "https://i.ibb.co/THK6XzR/2-2.png",
+      "https://i.ibb.co/THK6XzR/2-2.png",
+      "https://i.ibb.co/THK6XzR/2-2.png"
+    ],
+    "texto": "cuaderno"
   }
 ]
