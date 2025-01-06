@@ -12,25 +12,34 @@ export async function GET(request, { params }) {
     const products = JSON.parse(fileContents);
     const productCode = params.code;
 
+    let response;
+
     // Si el código en la URL es 'search', buscar por nombre
     if (productCode === 'search' && productName) {
       const filteredProducts = products.filter(p => p.nombre === productName);
       if (filteredProducts.length === 0) {
-        return NextResponse.json({ message: 'Producto no encontrado' }, { status: 404 });
+        response = NextResponse.json({ message: 'Producto no encontrado' }, { status: 404 });
+      } else {
+        response = NextResponse.json(filteredProducts);
       }
-      return NextResponse.json(filteredProducts);
-    }
-
-    // Buscar por código
-    if (productCode) {
+    } else if (productCode) {
+      // Buscar por código
       const product = products.find(p => p.código === productCode);
       if (!product) {
-        return NextResponse.json({ message: 'Producto no encontrado' }, { status: 404 });
+        response = NextResponse.json({ message: 'Producto no encontrado' }, { status: 404 });
+      } else {
+        response = NextResponse.json(product);
       }
-      return NextResponse.json(product);
+    } else {
+      response = NextResponse.json(products);
     }
 
-    return NextResponse.json(products);
+    // Añadir encabezados CORS
+    response.headers.set('Access-Control-Allow-Origin', 'http://localhost');
+    response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+    response.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+
+    return response;
   } catch (error) {
     console.error('Error al leer los productos:', error);
     return NextResponse.json({ message: 'Error al leer los productos' }, { status: 500 });
@@ -45,7 +54,14 @@ export async function POST(request) {
     const products = JSON.parse(fileContents);
     products.push(newProduct);
     await fs.writeFile(productsFilePath, JSON.stringify(products, null, 2));
-    return NextResponse.json({ message: 'Producto creado exitosamente', product: newProduct }, { status: 201 });
+    const response = NextResponse.json({ message: 'Producto creado exitosamente', product: newProduct }, { status: 201 });
+
+    // Añadir encabezados CORS
+    response.headers.set('Access-Control-Allow-Origin', 'http://localhost');
+    response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+    response.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+
+    return response;
   } catch (error) {
     console.error('Error al crear el producto:', error);
     return NextResponse.json({ message: 'Error al crear el producto' }, { status: 500 });
@@ -53,36 +69,64 @@ export async function POST(request) {
 }
 
 export async function PUT(request) {
-    try {
-      const updatedProduct = await request.json();
-      const fileContents = await fs.readFile(productsFilePath, 'utf8');
-      const products = JSON.parse(fileContents);
-      const productIndex = products.findIndex(product => product.código === updatedProduct.código);
-      if (productIndex === -1) {
-        return NextResponse.json({ message: 'Producto no encontrado' }, { status: 404 });
-      }
-      products[productIndex] = updatedProduct;
-      await fs.writeFile(productsFilePath, JSON.stringify(products, null, 2));
-      return NextResponse.json({ message: 'Producto actualizado exitosamente', product: updatedProduct }, { status: 200 });
-    } catch (error) {
-      console.error('Error al actualizar el producto:', error);
-      return NextResponse.json({ message: 'Error al actualizar el producto' }, { status: 500 });
-    }
-  }
+  try {
+    const updatedProduct = await request.json();
+    const fileContents = await fs.readFile(productsFilePath, 'utf8');
+    const products = JSON.parse(fileContents);
+    const productIndex = products.findIndex(product => product.código === updatedProduct.código);
+    if (productIndex === -1) {
+      const response = NextResponse.json({ message: 'Producto no encontrado' }, { status: 404 });
 
-  export async function DELETE(request, { params }) {
-    try {
-      const productCode = params.code;
-      const fileContents = await fs.readFile(productsFilePath, 'utf8');
-      const products = JSON.parse(fileContents);
-      const updatedProducts = products.filter(product => product.código !== productCode);
-      if (products.length === updatedProducts.length) {
-        return NextResponse.json({ message: 'Producto no encontrado' }, { status: 404 });
-      }
-      await fs.writeFile(productsFilePath, JSON.stringify(updatedProducts, null, 2));
-      return NextResponse.json({ message: 'Producto eliminado exitosamente' }, { status: 200 });
-    } catch (error) {
-      console.error('Error al eliminar el producto:', error);
-      return NextResponse.json({ message: 'Error al eliminar el producto' }, { status: 500 });
+      // Añadir encabezados CORS
+      response.headers.set('Access-Control-Allow-Origin', 'http://localhost');
+      response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+      response.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+
+      return response;
     }
+    products[productIndex] = updatedProduct;
+    await fs.writeFile(productsFilePath, JSON.stringify(products, null, 2));
+    const response = NextResponse.json({ message: 'Producto actualizado exitosamente', product: updatedProduct }, { status: 200 });
+
+    // Añadir encabezados CORS
+    response.headers.set('Access-Control-Allow-Origin', 'http://localhost');
+    response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+    response.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+
+    return response;
+  } catch (error) {
+    console.error('Error al actualizar el producto:', error);
+    return NextResponse.json({ message: 'Error al actualizar el producto' }, { status: 500 });
   }
+}
+
+export async function DELETE(request, { params }) {
+  try {
+    const productCode = params.code;
+    const fileContents = await fs.readFile(productsFilePath, 'utf8');
+    const products = JSON.parse(fileContents);
+    const updatedProducts = products.filter(product => product.código !== productCode);
+    if (products.length === updatedProducts.length) {
+      const response = NextResponse.json({ message: 'Producto no encontrado' }, { status: 404 });
+
+      // Añadir encabezados CORS
+      response.headers.set('Access-Control-Allow-Origin', 'http://localhost');
+      response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+      response.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+
+      return response;
+    }
+    await fs.writeFile(productsFilePath, JSON.stringify(updatedProducts, null, 2));
+    const response = NextResponse.json({ message: 'Producto eliminado exitosamente' }, { status: 200 });
+
+    // Añadir encabezados CORS
+    response.headers.set('Access-Control-Allow-Origin', 'http://localhost');
+    response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+    response.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+
+    return response;
+  } catch (error) {
+    console.error('Error al eliminar el producto:', error);
+    return NextResponse.json({ message: 'Error al eliminar el producto' }, { status: 500 });
+  }
+}
