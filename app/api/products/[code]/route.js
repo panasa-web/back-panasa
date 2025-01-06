@@ -35,7 +35,7 @@ export async function GET(request, { params }) {
     }
 
     // Añadir encabezados CORS
-    response.headers.set('Access-Control-Allow-Origin', 'http://localhost');
+    response.headers.set('Access-Control-Allow-Origin', '*');
     response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
     response.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
 
@@ -57,7 +57,7 @@ export async function POST(request) {
     const response = NextResponse.json({ message: 'Producto creado exitosamente', product: newProduct }, { status: 201 });
 
     // Añadir encabezados CORS
-    response.headers.set('Access-Control-Allow-Origin', 'http://localhost');
+    response.headers.set('Access-Control-Allow-Origin', '*');
     response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
     response.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
 
@@ -78,7 +78,7 @@ export async function PUT(request) {
       const response = NextResponse.json({ message: 'Producto no encontrado' }, { status: 404 });
 
       // Añadir encabezados CORS
-      response.headers.set('Access-Control-Allow-Origin', 'http://localhost');
+      response.headers.set('Access-Control-Allow-Origin', '*');
       response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
       response.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
 
@@ -89,7 +89,7 @@ export async function PUT(request) {
     const response = NextResponse.json({ message: 'Producto actualizado exitosamente', product: updatedProduct }, { status: 200 });
 
     // Añadir encabezados CORS
-    response.headers.set('Access-Control-Allow-Origin', 'http://localhost');
+    response.headers.set('Access-Control-Allow-Origin', '*');
     response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
     response.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
 
@@ -110,7 +110,7 @@ export async function DELETE(request, { params }) {
       const response = NextResponse.json({ message: 'Producto no encontrado' }, { status: 404 });
 
       // Añadir encabezados CORS
-      response.headers.set('Access-Control-Allow-Origin', 'http://localhost');
+      response.headers.set('Access-Control-Allow-Origin', '*');
       response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
       response.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
 
@@ -120,7 +120,7 @@ export async function DELETE(request, { params }) {
     const response = NextResponse.json({ message: 'Producto eliminado exitosamente' }, { status: 200 });
 
     // Añadir encabezados CORS
-    response.headers.set('Access-Control-Allow-Origin', 'http://localhost');
+    response.headers.set('Access-Control-Allow-Origin', '*');
     response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
     response.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
 
