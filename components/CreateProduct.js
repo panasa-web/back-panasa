@@ -32,8 +32,11 @@ export default function CreateProduct() {
 
   const validateForm = () => {
     return Object.entries(product).every(([key, value]) => {
-      if (key === 'img2' || key === 'diseños') {
+      if (key === 'img2') {
         return Array.isArray(value) ? value.length > 0 : value !== '';
+      }
+      if (key === 'diseños') {
+        return true; // Permitir que "diseños" esté vacío
       }
       return value !== '';
     });

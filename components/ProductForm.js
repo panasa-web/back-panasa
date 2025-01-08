@@ -31,6 +31,18 @@ export default function ProductForm() {
   const handleSubmit = (e) => {
     e.preventDefault();
     // Implementar la lógica para guardar el producto aquí
+    // Validar que los campos obligatorios estén llenos
+    const requiredFields = ['categoría', 'tipo', 'marca', 'nombre', 'código', 'modelo', 'hojas', 'cantidadCaja', 'img1'];
+    const isValid = requiredFields.every(field => product[field] !== '');
+
+    if (!isValid) {
+      // Mostrar un mensaje de error si algún campo obligatorio está vacío
+      alert('Por favor, llena todos los campos obligatorios.');
+      return;
+    }
+
+    // Lógica para guardar el producto
+    console.log('Producto guardado:', product);
   };
 
   return (
