@@ -14,7 +14,7 @@ export default function CreateProduct() {
     nombre: '',
     código: '',
     modelo: '',
-    diseños: '',
+    diseños: [], // Cambiar a array
     hojas: '',
     cantidadCaja: '',
     img1: '',
@@ -23,7 +23,7 @@ export default function CreateProduct() {
   });
 
   const handleChange = (e) => {
-    if (e.target.name === 'img2') {
+    if (e.target.name === 'img2' || e.target.name === 'diseños') {
       setProduct({ ...product, [e.target.name]: e.target.value.split(',') });
     } else {
       setProduct({ ...product, [e.target.name]: e.target.value });
@@ -32,7 +32,7 @@ export default function CreateProduct() {
 
   const validateForm = () => {
     return Object.entries(product).every(([key, value]) => {
-      if (key === 'img2') {
+      if (key === 'img2' || key === 'diseños') {
         return Array.isArray(value) ? value.length > 0 : value !== '';
       }
       return value !== '';
@@ -100,7 +100,12 @@ export default function CreateProduct() {
       <Input name="nombre" placeholder="Nombre" onChange={handleChange} value={product.nombre} />
       <Input name="código" placeholder="Código" onChange={handleChange} value={product.código} />
       <Input name="modelo" placeholder="Modelo" onChange={handleChange} value={product.modelo} />
-      <Input name="diseños" placeholder="Diseños" onChange={handleChange} value={product.diseños} />
+      <Input 
+        name="diseños" 
+        placeholder="URLs de diseños (separadas por comas)" 
+        onChange={handleChange} 
+        value={Array.isArray(product.diseños) ? product.diseños.join(',') : product.diseños} 
+      />
       <Input name="hojas" placeholder="Hojas" onChange={handleChange} value={product.hojas} />
       <Input name="cantidadCaja" placeholder="Cantidad por Caja" onChange={handleChange} value={product.cantidadCaja} />
       <Input name="img1" placeholder="URL de la imagen principal" onChange={handleChange} value={product.img1} />

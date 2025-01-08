@@ -50,7 +50,7 @@ export default function EditProduct() {
   };
 
   const handleInputChange = (e) => {
-    if (e.target.name === 'img2') {
+    if (e.target.name === 'img2' || e.target.name === 'diseños') {
       setEditedProduct({ ...editedProduct, [e.target.name]: e.target.value.split(',') });
     } else {
       setEditedProduct({ ...editedProduct, [e.target.name]: e.target.value });
@@ -59,7 +59,7 @@ export default function EditProduct() {
 
   const validateForm = () => {
     return Object.entries(editedProduct).every(([key, value]) => {
-      if (key === 'img2') {
+      if (key === 'img2' || key === 'diseños') {
         return Array.isArray(value) ? value.length > 0 : value !== '';
       }
       return value !== '';
@@ -184,7 +184,7 @@ export default function EditProduct() {
                   <Input
                     id={key}
                     name={key}
-                    value={key === 'img2' ? (Array.isArray(value) ? value.join(',') : value) : value}
+                    value={key === 'img2' || key === 'diseños' ? (Array.isArray(value) ? value.join(',') : value) : value}
                     onChange={handleInputChange}
                   />
                 </div>

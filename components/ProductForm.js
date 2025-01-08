@@ -12,7 +12,7 @@ export default function ProductForm() {
     nombre: '',
     código: '',
     modelo: '',
-    diseños: '',
+    diseños: [], // Cambiar a array
     hojas: '',
     cantidadCaja: '',
     img1: '',
@@ -21,7 +21,11 @@ export default function ProductForm() {
   });
 
   const handleChange = (e) => {
-    setProduct({ ...product, [e.target.name]: e.target.value });
+    if (e.target.name === 'img2' || e.target.name === 'diseños') {
+      setProduct({ ...product, [e.target.name]: e.target.value.split(',') });
+    } else {
+      setProduct({ ...product, [e.target.name]: e.target.value });
+    }
   };
 
   const handleSubmit = (e) => {
@@ -37,11 +41,21 @@ export default function ProductForm() {
       <Input name="nombre" placeholder="Nombre" onChange={handleChange} />
       <Input name="código" placeholder="Código" onChange={handleChange} />
       <Input name="modelo" placeholder="Modelo" onChange={handleChange} />
-      <Input name="diseños" placeholder="Diseños" onChange={handleChange} />
+      <Input 
+        name="diseños" 
+        placeholder="URLs de diseños (separadas por comas)" 
+        onChange={handleChange} 
+        value={Array.isArray(product.diseños) ? product.diseños.join(',') : product.diseños} 
+      />
       <Input name="hojas" placeholder="Hojas" onChange={handleChange} />
       <Input name="cantidadCaja" placeholder="Cantidad por Caja" onChange={handleChange} />
       <Input name="img1" placeholder="URL de la imagen principal" onChange={handleChange} />
-      <Input name="img2" placeholder="URLs de imágenes adicionales (separadas por comas)" onChange={handleChange} />
+      <Input 
+        name="img2" 
+        placeholder="URLs de imágenes adicionales (separadas por comas)" 
+        onChange={handleChange} 
+        value={Array.isArray(product.img2) ? product.img2.join(',') : product.img2} 
+      />
       <Input name="texto" placeholder="Descripción" onChange={handleChange} />
       <Button type="submit">Guardar Producto</Button>
     </form>

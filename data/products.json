@@ -6,7 +6,11 @@
     "nombre": "Cuaderno Argollado",
     "código": "CN001",
     "modelo": "Grande",
-    "diseños": "Liso",
+    "diseños":  [
+      "https://i.ibb.co/THK6XzR/2-2.png",
+      "https://i.ibb.co/THK6XzR/2-2.png",
+      "https://i.ibb.co/THK6XzR/2-2.png"
+    ],
     "hojas": "100",
     "cantidadCaja": "10",
     "img1": "/images/cuaderno-norma-grande.jpg",
@@ -23,7 +27,11 @@
     "nombre": "Cuaderno Argollado",
     "código": "CN002",
     "modelo": "Pequeño",
-    "diseños": "Cuadriculado",
+    "diseños":  [
+      "https://i.ibb.co/THK6XzR/2-2.png",
+      "https://i.ibb.co/THK6XzR/2-2.png",
+      "https://i.ibb.co/THK6XzR/2-2.png"
+    ],
     "hojas": "80",
     "cantidadCaja": "12",
     "img1": "/images/cuaderno-norma-pequeno.jpg",
@@ -40,7 +48,11 @@
     "nombre": "Grapadora de Escritorio",
     "código": "GR001",
     "modelo": "Estándar",
-    "diseños": "Negro",
+    "diseños":  [
+      "https://i.ibb.co/THK6XzR/2-2.png",
+      "https://i.ibb.co/THK6XzR/2-2.png",
+      "https://i.ibb.co/THK6XzR/2-2.png"
+    ],
     "hojas": "20",
     "cantidadCaja": "6",
     "img1": "/images/grapadora-rapid-estandar.jpg",
@@ -57,7 +69,11 @@
     "nombre": "Grapadora de Escritorio",
     "código": "GR002",
     "modelo": "Mini",
-    "diseños": "Azul",
+    "diseños":  [
+      "https://i.ibb.co/THK6XzR/2-2.png",
+      "https://i.ibb.co/THK6XzR/2-2.png",
+      "https://i.ibb.co/THK6XzR/2-2.png"
+    ],
     "hojas": "10",
     "cantidadCaja": "12",
     "img1": "/images/grapadora-rapid-mini.jpg",
@@ -74,7 +90,11 @@
     "nombre": "Set de Pinceles",
     "código": "PA001",
     "modelo": "Acrílico",
-    "diseños": "Variados",
+    "diseños":  [
+      "https://i.ibb.co/THK6XzR/2-2.png",
+      "https://i.ibb.co/THK6XzR/2-2.png",
+      "https://i.ibb.co/THK6XzR/2-2.png"
+    ],
     "hojas": "N/A",
     "cantidadCaja": "10",
     "img1": "/images/pinceles-arteza-acrilico.jpg",
@@ -91,7 +111,11 @@
     "nombre": "Set de Pinceles",
     "código": "PA002",
     "modelo": "Acuarela",
-    "diseños": "Variados",
+    "diseños":  [
+      "https://i.ibb.co/THK6XzR/2-2.png",
+      "https://i.ibb.co/THK6XzR/2-2.png",
+      "https://i.ibb.co/THK6XzR/2-2.png"
+    ],
     "hojas": "N/A",
     "cantidadCaja": "12",
     "img1": "/images/pinceles-arteza-acuarela.jpg",
@@ -108,7 +132,11 @@
     "nombre": "brunoasda",
     "código": "123456",
     "modelo": "A123",
-    "diseños": "5",
+    "diseños":  [
+      "https://i.ibb.co/THK6XzR/2-2.png",
+      "https://i.ibb.co/THK6XzR/2-2.png",
+      "https://i.ibb.co/THK6XzR/2-2.png"
+    ],
     "hojas": "20",
     "cantidadCaja": "20",
     "img1": "https://i.ibb.co/THK6XzR/2-2.png",
