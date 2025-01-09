@@ -1,46 +1,333 @@
 [
   {
     "categoría": "Cuadernos",
-    "tipo": "Cuaderno",
-    "marca": "Norma",
-    "nombre": "Cuaderno Argollado",
-    "código": "CN001",
-    "modelo": "Grande",
-    "diseños":  [
+    "tipo": "Deluxe/Escolar",
+    "marca": "Minerva",
+    "nombre": "Minerva cosido primaria",
+    "código": "004-020443",
+    "modelo": "C. Deluxe Cosido Rayado Sólido",
+    "diseños": [
       "https://i.ibb.co/THK6XzR/2-2.png",
       "https://i.ibb.co/THK6XzR/2-2.png",
-      "https://i.ibb.co/THK6XzR/2-2.png"
-    ],
-    "hojas": "100",
-    "cantidadCaja": "10",
-    "img1": "/images/cuaderno-norma-grande.jpg",
-    "img2": [
-      "/images/cuaderno-norma-grande-1.jpg",
-      "/images/cuaderno-norma-grande-2.jpg"
-    ],
-    "texto": "Cuaderno argollado de alta calidad para uso escolar o de oficina."
-  },
-  {
-    "categoría": "Cuadernos",
-    "tipo": "Cuaderno",
-    "marca": "Norma",
-    "nombre": "Cuaderno Argollado",
-    "código": "CN002",
-    "modelo": "Pequeño",
-    "diseños":  [
+      "https://i.ibb.co/THK6XzR/2-2.png",
+      "https://i.ibb.co/THK6XzR/2-2.png",
+      "https://i.ibb.co/THK6XzR/2-2.png",
       "https://i.ibb.co/THK6XzR/2-2.png",
       "https://i.ibb.co/THK6XzR/2-2.png",
       "https://i.ibb.co/THK6XzR/2-2.png"
     ],
     "hojas": "80",
-    "cantidadCaja": "12",
-    "img1": "/images/cuaderno-norma-pequeno.jpg",
+    "cantidadCaja": "25",
+    "img1": "https://i.ibb.co/THK6XzR/2-2.png",
+    "img2": [
+      "/images/cuaderno-norma-grande-1.jpg",
+      "/images/cuaderno-norma-grande-2.jpg"
+    ],
+    "texto": "Minerva - Cuadernos"
+  },
+  {
+    "categoría": "Cuadernos",
+    "tipo": "Deluxe/Escolar",
+    "marca": "Minerva",
+    "nombre": "Minerva cosido primaria",
+    "código": "004-020442",
+    "modelo": "C. Deluxe Cosido Triple Renglón Sin Sombra Sólido",
+    "diseños": [
+      "https://i.ibb.co/THK6XzR/2-2.png",
+      "https://i.ibb.co/THK6XzR/2-2.png",
+      "https://i.ibb.co/THK6XzR/2-2.png",
+      "https://i.ibb.co/THK6XzR/2-2.png",
+      "https://i.ibb.co/THK6XzR/2-2.png",
+      "https://i.ibb.co/THK6XzR/2-2.png",
+      "https://i.ibb.co/THK6XzR/2-2.png",
+      "https://i.ibb.co/THK6XzR/2-2.png"
+    ],
+    "hojas": "80",
+    "cantidadCaja": "25",
+    "img1": "https://i.ibb.co/THK6XzR/2-2.png",
+    "img2": [
+      "/images/cuaderno-norma-grande-1.jpg",
+      "/images/cuaderno-norma-grande-2.jpg"
+    ],
+    "texto": "Minerva - Cuadernos"
+  },
+  {
+    "categoría": "Cuadernos",
+    "tipo": "Deluxe/Escolar",
+    "marca": "Minerva",
+    "nombre": "Minerva cosido primaria",
+    "código": "004-020444",
+    "modelo": "C. Deluxe Cosido Cuadriculado Sólido",
+    "diseños": [
+      "https://i.ibb.co/THK6XzR/2-2.png",
+      "https://i.ibb.co/THK6XzR/2-2.png",
+      "https://i.ibb.co/THK6XzR/2-2.png",
+      "https://i.ibb.co/THK6XzR/2-2.png",
+      "https://i.ibb.co/THK6XzR/2-2.png",
+      "https://i.ibb.co/THK6XzR/2-2.png",
+      "https://i.ibb.co/THK6XzR/2-2.png",
+      "https://i.ibb.co/THK6XzR/2-2.png"
+    ],
+    "hojas": "80",
+    "cantidadCaja": "25",
+    "img1": "https://i.ibb.co/THK6XzR/2-2.png",
+    "img2": [
+      "/images/cuaderno-norma-grande-1.jpg",
+      "/images/cuaderno-norma-grande-2.jpg"
+    ],
+    "texto": "Minerva - Cuadernos"
+  },
+
+  {
+    "categoría": "Cuadernos",
+    "tipo": "Deluxe/Escolar",
+    "marca": "Minerva",
+    "nombre": "Minerva Magnus",
+    "código": "004-011205",
+    "modelo": "C. Deluxe Cuadriculado Sólido Magnus",
+    "diseños": [
+      "https://i.ibb.co/THK6XzR/2-2.png",
+      "https://i.ibb.co/THK6XzR/2-2.png",
+      "https://i.ibb.co/THK6XzR/2-2.png",
+      "https://i.ibb.co/THK6XzR/2-2.png",
+      "https://i.ibb.co/THK6XzR/2-2.png",
+      "https://i.ibb.co/THK6XzR/2-2.png",
+      "https://i.ibb.co/THK6XzR/2-2.png",
+      "https://i.ibb.co/THK6XzR/2-2.png",
+      "https://i.ibb.co/THK6XzR/2-2.png",
+      "https://i.ibb.co/THK6XzR/2-2.png",
+      "https://i.ibb.co/THK6XzR/2-2.png",
+      "https://i.ibb.co/THK6XzR/2-2.png",
+      "https://i.ibb.co/THK6XzR/2-2.png",
+      "https://i.ibb.co/THK6XzR/2-2.png",
+      "https://i.ibb.co/THK6XzR/2-2.png",
+      "https://i.ibb.co/THK6XzR/2-2.png"
+    ],
+    "hojas": "80",
+    "cantidadCaja": "25",
+    "img1": "https://i.ibb.co/THK6XzR/2-2.png",
     "img2": [
       "/images/cuaderno-norma-pequeno-1.jpg",
       "/images/cuaderno-norma-pequeno-2.jpg"
     ],
-    "texto": "Cuaderno argollado compacto ideal para tomar notas rápidas."
+    "texto": "Minerva - Cuadernos"
   },
+  {
+    "categoría": "Cuadernos",
+    "tipo": "Deluxe/Escolar",
+    "marca": "Minerva",
+    "nombre": "Minerva Magnus",
+    "código": "004-011204",
+    "modelo": "C. Deluxe Rayado Sólido Magnus",
+    "diseños": [
+      "https://i.ibb.co/THK6XzR/2-2.png",
+      "https://i.ibb.co/THK6XzR/2-2.png",
+      "https://i.ibb.co/THK6XzR/2-2.png",
+      "https://i.ibb.co/THK6XzR/2-2.png",
+      "https://i.ibb.co/THK6XzR/2-2.png",
+      "https://i.ibb.co/THK6XzR/2-2.png",
+      "https://i.ibb.co/THK6XzR/2-2.png",
+      "https://i.ibb.co/THK6XzR/2-2.png",
+      "https://i.ibb.co/THK6XzR/2-2.png",
+      "https://i.ibb.co/THK6XzR/2-2.png",
+      "https://i.ibb.co/THK6XzR/2-2.png",
+      "https://i.ibb.co/THK6XzR/2-2.png",
+      "https://i.ibb.co/THK6XzR/2-2.png",
+      "https://i.ibb.co/THK6XzR/2-2.png",
+      "https://i.ibb.co/THK6XzR/2-2.png",
+      "https://i.ibb.co/THK6XzR/2-2.png"
+    ],
+    "hojas": "80",
+    "cantidadCaja": "25",
+    "img1": "https://i.ibb.co/THK6XzR/2-2.png",
+    "img2": [
+      "/images/cuaderno-norma-pequeno-1.jpg",
+      "/images/cuaderno-norma-pequeno-2.jpg"
+    ],
+    "texto": "Minerva - Cuadernos"
+  },
+
+  {
+    "categoría": "Cuadernos",
+    "tipo": "Deluxe/Escolar",
+    "marca": "Minerva",
+    "nombre": "Minerva Magnus Kids",
+    "código": "004-011884",
+    "modelo": "C. Deluxe Triple Renglón Sin Sombra Sólido Magnus Kids",
+    "diseños": [
+      "https://i.ibb.co/THK6XzR/2-2.png",
+      "https://i.ibb.co/THK6XzR/2-2.png",
+      "https://i.ibb.co/THK6XzR/2-2.png",
+      "https://i.ibb.co/THK6XzR/2-2.png",
+      "https://i.ibb.co/THK6XzR/2-2.png",
+      "https://i.ibb.co/THK6XzR/2-2.png",
+      "https://i.ibb.co/THK6XzR/2-2.png",
+      "https://i.ibb.co/THK6XzR/2-2.png"
+    ],
+    "hojas": "80",
+    "cantidadCaja": "25",
+    "img1": "https://i.ibb.co/THK6XzR/2-2.png",
+    "img2": [
+      "/images/cuaderno-norma-pequeno-1.jpg",
+      "/images/cuaderno-norma-pequeno-2.jpg"
+    ],
+    "texto": "Minerva - Cuadernos"
+  },
+  {
+    "categoría": "Cuadernos",
+    "tipo": "Deluxe/Escolar",
+    "marca": "Minerva",
+    "nombre": "Minerva Magnus Kids",
+    "código": "004-011882",
+    "modelo": "C. Deluxe Cuadriculado Sólido Magnus Kids",
+    "diseños": [
+      "https://i.ibb.co/THK6XzR/2-2.png",
+      "https://i.ibb.co/THK6XzR/2-2.png",
+      "https://i.ibb.co/THK6XzR/2-2.png",
+      "https://i.ibb.co/THK6XzR/2-2.png",
+      "https://i.ibb.co/THK6XzR/2-2.png",
+      "https://i.ibb.co/THK6XzR/2-2.png",
+      "https://i.ibb.co/THK6XzR/2-2.png",
+      "https://i.ibb.co/THK6XzR/2-2.png"
+    ],
+    "hojas": "80",
+    "cantidadCaja": "25",
+    "img1": "https://i.ibb.co/THK6XzR/2-2.png",
+    "img2": [
+      "/images/cuaderno-norma-pequeno-1.jpg",
+      "/images/cuaderno-norma-pequeno-2.jpg"
+    ],
+    "texto": "Minerva - Cuadernos"
+  },
+  {
+    "categoría": "Cuadernos",
+    "tipo": "Deluxe/Escolar",
+    "marca": "Minerva",
+    "nombre": "Minerva Magnus Kids",
+    "código": "004-011883",
+    "modelo": "C. Deluxe Rayado Sólido Magnus Kids",
+    "diseños": [
+      "https://i.ibb.co/THK6XzR/2-2.png",
+      "https://i.ibb.co/THK6XzR/2-2.png",
+      "https://i.ibb.co/THK6XzR/2-2.png",
+      "https://i.ibb.co/THK6XzR/2-2.png",
+      "https://i.ibb.co/THK6XzR/2-2.png",
+      "https://i.ibb.co/THK6XzR/2-2.png",
+      "https://i.ibb.co/THK6XzR/2-2.png",
+      "https://i.ibb.co/THK6XzR/2-2.png"
+    ],
+    "hojas": "80",
+    "cantidadCaja": "25",
+    "img1": "https://i.ibb.co/THK6XzR/2-2.png",
+    "img2": [
+      "/images/cuaderno-norma-pequeno-1.jpg",
+      "/images/cuaderno-norma-pequeno-2.jpg"
+    ],
+    "texto": "Minerva - Cuadernos"
+  },
+  {
+    "categoría": "Cuadernos",
+    "tipo": "Deluxe/Escolar",
+    "marca": "Minerva",
+    "nombre": "Minerva Magnus Kids",
+    "código": "004-011885",
+    "modelo": "C. Deluxe 1*1 Sólido Magnus Kids",
+    "diseños": [
+      "https://i.ibb.co/THK6XzR/2-2.png",
+      "https://i.ibb.co/THK6XzR/2-2.png",
+      "https://i.ibb.co/THK6XzR/2-2.png",
+      "https://i.ibb.co/THK6XzR/2-2.png",
+      "https://i.ibb.co/THK6XzR/2-2.png",
+      "https://i.ibb.co/THK6XzR/2-2.png",
+      "https://i.ibb.co/THK6XzR/2-2.png",
+      "https://i.ibb.co/THK6XzR/2-2.png"
+    ],
+    "hojas": "80",
+    "cantidadCaja": "25",
+    "img1": "https://i.ibb.co/THK6XzR/2-2.png",
+    "img2": [
+      "/images/cuaderno-norma-pequeno-1.jpg",
+      "/images/cuaderno-norma-pequeno-2.jpg"
+    ],
+    "texto": "Minerva - Cuadernos"
+  },
+
+  {
+    "categoría": "Cuadernos",
+    "tipo": "Deluxe/Escolar",
+    "marca": "Minerva",
+    "nombre": "Minerva Magnus Kids",
+    "código": "004-023746",
+    "modelo": "C. Deluxe Cuadriculado Cover Touch",
+    "diseños": [
+      "https://i.ibb.co/THK6XzR/2-2.png",
+      "https://i.ibb.co/THK6XzR/2-2.png",
+      "https://i.ibb.co/THK6XzR/2-2.png",
+      "https://i.ibb.co/THK6XzR/2-2.png",
+      "https://i.ibb.co/THK6XzR/2-2.png",
+      "https://i.ibb.co/THK6XzR/2-2.png",
+      "https://i.ibb.co/THK6XzR/2-2.png",
+      "https://i.ibb.co/THK6XzR/2-2.png",
+      "https://i.ibb.co/THK6XzR/2-2.png",
+      "https://i.ibb.co/THK6XzR/2-2.png",
+      "https://i.ibb.co/THK6XzR/2-2.png",
+      "https://i.ibb.co/THK6XzR/2-2.png",
+      "https://i.ibb.co/THK6XzR/2-2.png",
+      "https://i.ibb.co/THK6XzR/2-2.png",
+      "https://i.ibb.co/THK6XzR/2-2.png",
+      "https://i.ibb.co/THK6XzR/2-2.png"
+    ],
+    "hojas": "80",
+    "cantidadCaja": "25",
+    "img1": "https://i.ibb.co/THK6XzR/2-2.png",
+    "img2": [
+      "/images/cuaderno-norma-pequeno-1.jpg",
+      "/images/cuaderno-norma-pequeno-2.jpg"
+    ],
+    "texto": "Minerva - Cuadernos"
+  },
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   {
     "categoría": "Papelería",
     "tipo": "Grapadora",
@@ -48,7 +335,7 @@
     "nombre": "Grapadora de Escritorio",
     "código": "GR001",
     "modelo": "Estándar",
-    "diseños":  [
+    "diseños": [
       "https://i.ibb.co/THK6XzR/2-2.png",
       "https://i.ibb.co/THK6XzR/2-2.png",
       "https://i.ibb.co/THK6XzR/2-2.png"
@@ -69,7 +356,7 @@
     "nombre": "Grapadora de Escritorio",
     "código": "GR002",
     "modelo": "Mini",
-    "diseños":  [
+    "diseños": [
       "https://i.ibb.co/THK6XzR/2-2.png",
       "https://i.ibb.co/THK6XzR/2-2.png",
       "https://i.ibb.co/THK6XzR/2-2.png"
@@ -83,6 +370,50 @@
     ],
     "texto": "Grapadora compacta ideal para viajes o uso personal."
   },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   {
     "categoría": "Papel Tissue",
     "tipo": "Pincel",
@@ -90,7 +421,7 @@
     "nombre": "Set de Pinceles",
     "código": "PA001",
     "modelo": "Acrílico",
-    "diseños":  [
+    "diseños": [
       "https://i.ibb.co/THK6XzR/2-2.png",
       "https://i.ibb.co/THK6XzR/2-2.png",
       "https://i.ibb.co/THK6XzR/2-2.png"
@@ -111,7 +442,7 @@
     "nombre": "Set de Pinceles",
     "código": "PA002",
     "modelo": "Acuarela",
-    "diseños":  [
+    "diseños": [
       "https://i.ibb.co/THK6XzR/2-2.png",
       "https://i.ibb.co/THK6XzR/2-2.png",
       "https://i.ibb.co/THK6XzR/2-2.png"
@@ -132,7 +463,7 @@
     "nombre": "brunoasda",
     "código": "123456",
     "modelo": "A123",
-    "diseños":  [
+    "diseños": [
       "https://i.ibb.co/THK6XzR/2-2.png",
       "https://i.ibb.co/THK6XzR/2-2.png",
       "https://i.ibb.co/THK6XzR/2-2.png"
