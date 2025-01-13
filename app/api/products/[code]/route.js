@@ -1,132 +1,137 @@
 import { NextResponse } from 'next/server';
-import fs from 'fs/promises';
-import path from 'path';
-
-const productsFilePath = path.join(process.cwd(), 'data', 'products.json');
+import prisma from '../../../../lib/prisma';
 
 export async function GET(request, { params }) {
   try {
     const { searchParams } = new URL(request.url);
-    const productName = searchParams.get('nombre');
-    const fileContents = await fs.readFile(productsFilePath, 'utf8');
-    const products = JSON.parse(fileContents);
-    const productCode = params.code;
+    const searchName = searchParams.get('name');
+    const searchCode = searchParams.get('code');
 
-    let response;
-
-    // Si el código en la URL es 'search', buscar por nombre
-    if (productCode === 'search' && productName) {
-      const filteredProducts = products.filter(p => p.nombre === productName);
-      if (filteredProducts.length === 0) {
-        response = NextResponse.json({ message: 'Producto no encontrado' }, { status: 404 });
-      } else {
-        response = NextResponse.json(filteredProducts);
-      }
-    } else if (productCode) {
-      // Buscar por código
-      const product = products.find(p => p.código === productCode);
-      if (!product) {
-        response = NextResponse.json({ message: 'Producto no encontrado' }, { status: 404 });
-      } else {
-        response = NextResponse.json(product);
-      }
-    } else {
-      response = NextResponse.json(products);
+    // Búsqueda por nombre
+    if (searchName) {
+      const products = await prisma.product.findMany({
+        where: {
+          nombre: {
+            contains: searchName,
+            mode: 'insensitive'
+          }
+        }
+      });
+      const response = NextResponse.json(products);
+      response.headers.set('Access-Control-Allow-Origin', '*');
+      response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+      response.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+      return response;
     }
 
-    // Añadir encabezados CORS
+    // Búsqueda por código en searchParams
+    if (searchCode) {
+      const products = await prisma.product.findMany({
+        where: {
+          código: {
+            contains: searchCode,
+            mode: 'insensitive'
+          }
+        }
+      });
+      const response = NextResponse.json(products);
+      response.headers.set('Access-Control-Allow-Origin', '*');
+      response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+      response.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+      return response;
+    }
+
+    // Búsqueda por código en params (original)
+    const product = await prisma.product.findUnique({ where: { código: params.code } });
+    if (!product) {
+      return NextResponse.json({ message: 'Producto no encontrado' }, { status: 404 });
+    }
+    const response = NextResponse.json(product);
     response.headers.set('Access-Control-Allow-Origin', '*');
     response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
     response.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-
     return response;
   } catch (error) {
-    console.error('Error al leer los productos:', error);
-    return NextResponse.json({ message: 'Error al leer los productos' }, { status: 500 });
+    console.error('Error al obtener el producto:', error);
+    const response = NextResponse.json({ message: 'Error al obtener el producto' }, { status: 500 });
+    response.headers.set('Access-Control-Allow-Origin', '*');
+    response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+    response.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    return response;
   }
 }
 
+// ... resto del código existente ...
 
 export async function POST(request) {
   try {
     const newProduct = await request.json();
-    const fileContents = await fs.readFile(productsFilePath, 'utf8');
-    const products = JSON.parse(fileContents);
-    products.push(newProduct);
-    await fs.writeFile(productsFilePath, JSON.stringify(products, null, 2));
-    const response = NextResponse.json({ message: 'Producto creado exitosamente', product: newProduct }, { status: 201 });
-
-    // Añadir encabezados CORS
+    const product = await prisma.product.create({ data: newProduct });
+    const response = NextResponse.json({ message: 'Producto creado exitosamente', product }, { status: 201 });
     response.headers.set('Access-Control-Allow-Origin', '*');
     response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
     response.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-
     return response;
   } catch (error) {
     console.error('Error al crear el producto:', error);
-    return NextResponse.json({ message: 'Error al crear el producto' }, { status: 500 });
-  }
-}
-
-export async function PUT(request) {
-  try {
-    const updatedProduct = await request.json();
-    const fileContents = await fs.readFile(productsFilePath, 'utf8');
-    const products = JSON.parse(fileContents);
-    const productIndex = products.findIndex(product => product.código === updatedProduct.código);
-    if (productIndex === -1) {
-      const response = NextResponse.json({ message: 'Producto no encontrado' }, { status: 404 });
-
-      // Añadir encabezados CORS
-      response.headers.set('Access-Control-Allow-Origin', '*');
-      response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-      response.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-
-      return response;
-    }
-    products[productIndex] = updatedProduct;
-    await fs.writeFile(productsFilePath, JSON.stringify(products, null, 2));
-    const response = NextResponse.json({ message: 'Producto actualizado exitosamente', product: updatedProduct }, { status: 200 });
-
-    // Añadir encabezados CORS
+    const response = NextResponse.json({ message: 'Error al crear el producto' }, { status: 500 });
     response.headers.set('Access-Control-Allow-Origin', '*');
     response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
     response.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-
     return response;
-  } catch (error) {
-    console.error('Error al actualizar el producto:', error);
-    return NextResponse.json({ message: 'Error al actualizar el producto' }, { status: 500 });
   }
 }
+
+export async function PUT(request, { params }) {
+  try {
+    const code = params.code;
+    const updatedProduct = await request.json();
+
+    console.log('Código del producto:', code);
+    console.log('Datos recibidos:', updatedProduct);
+
+    if (!updatedProduct) {
+      return NextResponse.json({ message: 'No se proporcionaron datos para actualizar' }, { status: 400 });
+    }
+
+    const product = await prisma.product.update({
+      where: { código: code },
+      data: updatedProduct,
+    });
+
+    return NextResponse.json({ message: 'Producto actualizado correctamente', product }, { status: 200 });
+  } catch (error) {
+    console.error('Error al actualizar el producto:', error);
+    return NextResponse.json({ message: 'Error al actualizar el producto', error: error.message }, { status: 500 });
+  }
+}
+
+
+
 
 export async function DELETE(request, { params }) {
   try {
-    const productCode = params.code;
-    const fileContents = await fs.readFile(productsFilePath, 'utf8');
-    const products = JSON.parse(fileContents);
-    const updatedProducts = products.filter(product => product.código !== productCode);
-    if (products.length === updatedProducts.length) {
-      const response = NextResponse.json({ message: 'Producto no encontrado' }, { status: 404 });
-
-      // Añadir encabezados CORS
-      response.headers.set('Access-Control-Allow-Origin', '*');
-      response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-      response.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-
-      return response;
-    }
-    await fs.writeFile(productsFilePath, JSON.stringify(updatedProducts, null, 2));
-    const response = NextResponse.json({ message: 'Producto eliminado exitosamente' }, { status: 200 });
-
-    // Añadir encabezados CORS
+    await prisma.product.delete({ where: { código: params.code } });
+    const response = NextResponse.json({ message: 'Producto eliminado exitosamente' });
     response.headers.set('Access-Control-Allow-Origin', '*');
     response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
     response.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-
     return response;
   } catch (error) {
     console.error('Error al eliminar el producto:', error);
-    return NextResponse.json({ message: 'Error al eliminar el producto' }, { status: 500 });
+    const response = NextResponse.json({ message: 'Error al eliminar el producto' }, { status: 500 });
+    response.headers.set('Access-Control-Allow-Origin', '*');
+    response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+    response.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    return response;
   }
+}
+
+// Manejar solicitudes OPTIONS para CORS
+export async function OPTIONS() {
+  const response = NextResponse.json({});
+  response.headers.set('Access-Control-Allow-Origin', '*');
+  response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  response.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  return response;
 }

@@ -1,0 +1,68 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Product {
+  id           Int      @id @default(autoincrement())
+  categoría    String
+  tipo         String
+  marca        String
+  nombre       String
+  código       String   @unique
+  modelo       String
+  diseños      String[]
+  hojas        String
+  cantidadCaja String
+  heroImg      String 
+  img1         String
+  img2         String[]
+  texto        String
+}
+
+model CotizaAqui {
+  id          Int      @id @default(autoincrement())
+  nombre      String
+  apellido    String
+  cargo       String
+  empresa     String
+  ruc         String
+  industria   String
+  pais        String
+  ciudad      String
+  telefono    String
+  correo      String
+  mensaje     String
+  preferencia String
+  productos   String?
+  createdAt DateTime @default(now())
+}
+
+model Contactanos {
+  id        Int      @id @default(autoincrement())
+  nombre    String
+  telefono  String
+  mensaje   String
+  apellido  String?
+  correo    String?
+  createdAt DateTime @default(now())
+}
+
+model ReclamaAqui {
+  id        Int      @id @default(autoincrement())
+  nombre    String
+  apellido  String
+  ruc       String
+  telefono  String
+  mensaje   String
+  createdAt DateTime @default(now())
+}
+
+model Categoria {
+  id    Int    @id @default(autoincrement())
+  nombre String
+}
