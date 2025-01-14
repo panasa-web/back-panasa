@@ -6,9 +6,16 @@ import { Card } from "@/components/ui/card"
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-gradient-to-b from-sky-100 to-white">
-      <div className="container mx-auto px-4 py-16">
-        <h1 className="text-4xl font-bold text-blue-900 text-center mb-8">
+    <main className="min-h-screen bg-gradient-to-b from-sky-100 to-white relative flex items-center justify-center">
+      <div className="absolute inset-0">
+        <img 
+          src="https://i.ibb.co/85x9PHS/Dise-o-sin-t-tulo.png" 
+          alt="Background" 
+          className="w-full h-full object-cover opacity-30" 
+        />
+      </div>
+      <div className="relative container mx-auto px-4 py-16">
+        <h1 className="text-7xl font-bold text-black text-center mb-8">
           Gestión de Datos Panasa
         </h1>
         
@@ -16,10 +23,10 @@ export default function Home() {
           <Link href="/productos">
             <Card className="p-6 hover:shadow-lg transition-shadow cursor-pointer bg-white border-sky-200">
               <div className="text-center">
-                <h2 className="text-2xl font-semibold text-blue-800 mb-3">
+                <h2 className="text-2xl font-semibold text-[#2200CC] mb-3">
                   Gestionar Productos
                 </h2>
-                <p className="text-sky-700">
+                <p className="text-black">
                   Administra el catálogo de productos
                 </p>
               </div>
@@ -27,17 +34,17 @@ export default function Home() {
           </Link>
 
           <Link href="/formularios">
-  <Card className="p-6 hover:shadow-lg transition-shadow cursor-pointer bg-white border-sky-200">
-    <div className="text-center">
-      <h2 className="text-2xl font-semibold text-blue-800 mb-3">
-        Gestionar Formularios
-      </h2>
-      <p className="text-sky-700">
-        Visualiza y administra los formularios recibidos
-      </p>
-    </div>
-  </Card>
-</Link>
+            <Card className="p-6 hover:shadow-lg transition-shadow cursor-pointer bg-white border-sky-200">
+              <div className="text-center">
+                <h2 className="text-2xl font-semibold text-[#2200CC] mb-3">
+                  Gestionar Formularios
+                </h2>
+                <p className="text-black">
+                  Visualiza y administra los formularios recibidos
+                </p>
+              </div>
+            </Card>
+          </Link>
         </div>
       </div>
     </main>

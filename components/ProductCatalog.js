@@ -150,50 +150,48 @@ export default function ProductCatalog() {
 
   return (
     <div>
-      <div className="mb-6">
-        <Input
-          placeholder="Buscar por nombre o código"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className="mb-4"
-        />
-        <Accordion type="single" collapsible>
-          <AccordionItem value="category">
-            <AccordionTrigger>Categoría</AccordionTrigger>
+      <Input
+        placeholder="Buscar por nombre o código"
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+        className="mb-4"
+      />
+      <Accordion type="single" collapsible>
+        <AccordionItem value="category">
+          <AccordionTrigger>Categoría</AccordionTrigger>
+          <AccordionContent>
+            <div className="flex flex-wrap gap-2">
+              {categories.map(category => (
+                <Button
+                  key={category}
+                  variant={selectedCategory === category ? "default" : "outline"}
+                  onClick={() => setSelectedCategory(category)}
+                >
+                  {category}
+                </Button>
+              ))}
+            </div>
+          </AccordionContent>
+        </AccordionItem>
+        {selectedCategory && (
+          <AccordionItem value="type">
+            <AccordionTrigger>Tipo</AccordionTrigger>
             <AccordionContent>
               <div className="flex flex-wrap gap-2">
-                {categories.map(category => (
+                {types.map(type => (
                   <Button
-                    key={category}
-                    variant={selectedCategory === category ? "default" : "outline"}
-                    onClick={() => setSelectedCategory(category)}
+                    key={type}
+                    variant={selectedType === type ? "default" : "outline"}
+                    onClick={() => setSelectedType(type)}
                   >
-                    {category}
+                    {type}
                   </Button>
                 ))}
               </div>
             </AccordionContent>
           </AccordionItem>
-          {selectedCategory && (
-            <AccordionItem value="type">
-              <AccordionTrigger>Tipo</AccordionTrigger>
-              <AccordionContent>
-                <div className="flex flex-wrap gap-2">
-                  {types.map(type => (
-                    <Button
-                      key={type}
-                      variant={selectedType === type ? "default" : "outline"}
-                      onClick={() => setSelectedType(type)}
-                    >
-                      {type}
-                    </Button>
-                  ))}
-                </div>
-              </AccordionContent>
-            </AccordionItem>
-          )}
-        </Accordion>
-      </div>
+        )}
+      </Accordion>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4">
         {filteredProducts.slice(0, 24).map((product) => (
@@ -250,4 +248,3 @@ export default function ProductCatalog() {
     </div>
   )
 }
-

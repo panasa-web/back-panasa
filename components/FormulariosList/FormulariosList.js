@@ -4,7 +4,8 @@ import { useState, useEffect } from 'react'
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Calendar } from "@/components/ui/calendar"
-import { Dialog, DialogContent } from "@/components/ui/dialog"
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog"
+
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog"
 import {
   Table,
@@ -35,7 +36,8 @@ export default function FormulariosList({ type }) {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [formToDelete, setFormToDelete] = useState(null)
   const [showDeleteAlert, setShowDeleteAlert] = useState(false)
-  
+  const [isDialogOpen, setIsDialogOpen] = useState(false)
+
   const itemsPerPage = 20
   const maxPages = Math.ceil(filteredForms.length / itemsPerPage)
 
@@ -56,7 +58,8 @@ export default function FormulariosList({ type }) {
     if (searchTerm) {
       filtered = filtered.filter(form => 
         form.nombre.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        form.id.toString().includes(searchTerm)
+        form.id.toString().includes(searchTerm) ||
+        form.telefono.includes(searchTerm)
       )
     }
     
@@ -150,7 +153,7 @@ export default function FormulariosList({ type }) {
         <div className="space-y-2">
           <h3 className="text-lg font-medium">Buscar</h3>
           <Input
-            placeholder="Buscar por nombre o ID"
+            placeholder="Buscar por nombre, ID o teléfono"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
@@ -179,42 +182,42 @@ export default function FormulariosList({ type }) {
       <div className="col-span-3">
         <Table>
           <TableHeader>
-          <TableRow>
-      <TableHead>ID</TableHead>
-      <TableHead>Nombre</TableHead>
-      <TableHead>Fecha</TableHead>
-      <TableHead>Mensaje</TableHead>
-      <TableHead className="text-right">Acciones</TableHead>
-    </TableRow>
+            <TableRow>
+              <TableHead>ID</TableHead>
+              <TableHead>Nombre</TableHead>
+              <TableHead>Fecha</TableHead>
+              <TableHead>Mensaje</TableHead>
+              <TableHead className="text-right">Acciones</TableHead>
+            </TableRow>
           </TableHeader>
           <TableBody>
-          {getCurrentPageItems().map((form) => (
-      <TableRow 
-        key={form.id}
-        className="cursor-pointer hover:bg-slate-100"
-      >
-        <TableCell onClick={() => handleRowClick(form)}>{form.id}</TableCell>
-        <TableCell onClick={() => handleRowClick(form)}>{form.nombre}</TableCell>
-        <TableCell onClick={() => handleRowClick(form)}>
-          {format(new Date(form.createdAt), 'dd/MM/yyyy')}
-        </TableCell>
-        <TableCell onClick={() => handleRowClick(form)}>
-          {truncateText(form.mensaje)}
-        </TableCell>
-        <TableCell className="text-right">
-          <Button
-            variant="destructive"
-            size="sm"
-            onClick={(e) => {
-              e.stopPropagation();
-              setFormToDelete(form);
-              setShowDeleteAlert(true);
-            }}
-          >
-            Eliminar
-          </Button>
-        </TableCell>
-      </TableRow>
+            {getCurrentPageItems().map((form) => (
+              <TableRow 
+                key={form.id}
+                className="cursor-pointer hover:bg-slate-100"
+              >
+                <TableCell onClick={() => handleRowClick(form)}>{form.id}</TableCell>
+                <TableCell onClick={() => handleRowClick(form)}>{form.nombre}</TableCell>
+                <TableCell onClick={() => handleRowClick(form)}>
+                  {format(new Date(form.createdAt), 'dd/MM/yyyy')}
+                </TableCell>
+                <TableCell onClick={() => handleRowClick(form)}>
+                  {truncateText(form.mensaje)}
+                </TableCell>
+                <TableCell className="text-right">
+                  <Button
+                    variant="destructive"
+                    size="sm"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setFormToDelete(form);
+                      setShowDeleteAlert(true);
+                    }}
+                  >
+                    Eliminar
+                  </Button>
+                </TableCell>
+              </TableRow>
             ))}
           </TableBody>
         </Table>
@@ -243,41 +246,60 @@ export default function FormulariosList({ type }) {
       </div>
 
       <AlertDialog open={showDeleteAlert} onOpenChange={setShowDeleteAlert}>
-      <AlertDialogContent>
-        <AlertDialogHeader>
-          <AlertDialogTitle>¿Estás seguro?</AlertDialogTitle>
-          <AlertDialogDescription>
-            Esta acción no se puede deshacer. Se eliminará permanentemente este formulario.
-          </AlertDialogDescription>
-        </AlertDialogHeader>
-        <AlertDialogFooter>
-          <AlertDialogCancel>Cancelar</AlertDialogCancel>
-          <AlertDialogAction
-            className="bg-red-600 hover:bg-red-700"
-            onClick={() => {
-              handleDelete(formToDelete.id);
-              setShowDeleteAlert(false);
-            }}
-          >
-            Eliminar
-          </AlertDialogAction>
-        </AlertDialogFooter>
-      </AlertDialogContent>
-    </AlertDialog>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>¿Estás seguro?</AlertDialogTitle>
+            <AlertDialogDescription>
+              Esta acción no se puede deshacer. Se eliminará permanentemente este formulario.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancelar</AlertDialogCancel>
+            <AlertDialogAction
+              className="bg-red-600 hover:bg-red-700"
+              onClick={() => {
+                handleDelete(formToDelete.id);
+                setShowDeleteAlert(false);
+              }}
+            >
+              Eliminar
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
 
       <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
-        <DialogContent className="max-w-3xl">
+        <DialogContent className="max-w-3xl max-h-[80vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle className="text-center">Detalles del Formulario</DialogTitle>
+            <DialogDescription className="text-center">
+              Información detallada del formulario seleccionado.
+            </DialogDescription>
+          </DialogHeader>
           {selectedForm && (
             <div className="space-y-4">
-              <h2 className="text-2xl font-bold">Detalles del Formulario</h2>
-              {Object.entries(selectedForm).map(([key, value]) => (
-                <div key={key} className="grid grid-cols-3 gap-4">
-                  <dt className="font-medium capitalize">{key}:</dt>
-                  <dd className="col-span-2">{value}</dd>
-                </div>
-              ))}
+              <h2 className="text-2xl font-bold text-center">Detalles del Formulario</h2>
+              <Table className="w-full mx-auto">
+                <TableBody>
+                  {Object.entries(selectedForm).map(([key, value]) => (
+                    key !== 'mensaje' && (
+                      <TableRow key={key}>
+                        <TableCell className="font-medium capitalize text-center">{key}</TableCell>
+                        <TableCell className="text-center">{value}</TableCell>
+                      </TableRow>
+                    )
+                  ))}
+                  <TableRow>
+                    <TableCell className="font-medium capitalize text-center">mensaje</TableCell>
+                    <TableCell className="text-center">{selectedForm.mensaje}</TableCell>
+                  </TableRow>
+                </TableBody>
+              </Table>
             </div>
           )}
+          <DialogFooter className="flex justify-center">
+            <Button onClick={() => setIsModalOpen(false)}>Cerrar</Button>
+          </DialogFooter>
         </DialogContent>
       </Dialog>
     </div>
