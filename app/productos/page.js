@@ -1,14 +1,45 @@
-// ruta: app/productos/page.js
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import ProductCatalog from '@/components/ProductCatalog'
 import CreateProductForm from '@/components/CreateProductForm'
 import Link from 'next/link'
+import { useUser } from '@auth0/nextjs-auth0/client'
+import { useRouter } from 'next/navigation'
 
 export default function ProductosPage() {
+  const [isClient, setIsClient] = useState(false)
+  const router = useRouter()
+
+  useEffect(() => {
+    setIsClient(true)
+  }, [])
+
+  if (!isClient) {
+    return null // O un indicador de carga
+  }
+
+  return <ProductosContent />
+}
+
+function ProductosContent() {
+  const { user, error, isLoading } = useUser()
+  const router = useRouter()
   const [activeTab, setActiveTab] = useState("catalog")
+
+  useEffect(() => {
+    if (!isLoading && !user) {
+      router.push('/api/auth/login')
+    }
+  }, [isLoading, user, router])
+
+  if (isLoading) return <div>Loading...</div>
+  if (error) return <div>{error.message}</div>
+
+  if (!user) {
+    return null // Render nothing while redirecting
+  }
 
   return (
     <main className="min-h-screen bg-gradient-to-b from-sky-100 to-white relative flex items-center justify-center overflow-hidden">

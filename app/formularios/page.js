@@ -1,13 +1,43 @@
-// ruta: app/formularios/page.js
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import FormulariosList from '@/components/FormulariosList/FormulariosList'
 import Link from 'next/link'
+import { useUser } from '@auth0/nextjs-auth0/client';
+import { useRouter } from 'next/navigation';
 
 export default function FormulariosPage() {
-  const [activeTab, setActiveTab] = useState("cotizaAqui")
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  if (!isClient) {
+    return null; // o un indicador de carga
+  }
+
+  return <AuthenticatedFormulariosContent />;
+}
+
+function AuthenticatedFormulariosContent() {
+  const { user, error, isLoading } = useUser();
+  const router = useRouter();
+  const [activeTab, setActiveTab] = useState("cotizaAqui");
+
+  useEffect(() => {
+    if (!isLoading && !user) {
+      router.push('/api/auth/login');
+    }
+  }, [isLoading, user, router]);
+
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>{error.message}</div>;
+
+  if (!user) {
+    return null; // No renderizar nada mientras se redirecciona
+  }
 
   return (
     <main className="min-h-screen bg-gradient-to-b from-sky-100 to-white relative flex items-center justify-center">
@@ -25,8 +55,8 @@ export default function FormulariosPage() {
         <h1 className="text-4xl font-bold text-blue-900 text-center mb-8">Gestión de Formularios</h1>
         <div className="max-w-4xl mx-auto mb-4">
           <Tabs value={activeTab} onValueChange={setActiveTab}>
-          <TabsList className="flex w-full pr-8"> 
-              <TabsTrigger value="cotizaAqui" className="flex-1 text-lg py-1 px-6 text-center" >Cotiza Aquí</TabsTrigger>
+            <TabsList className="flex w-full pr-8"> 
+              <TabsTrigger value="cotizaAqui" className="flex-1 text-lg py-1 px-6 text-center">Cotiza Aquí</TabsTrigger>
               <TabsTrigger value="contactanos" className="flex-1 text-lg py-1 px-6 text-center">Contáctanos</TabsTrigger>
               <TabsTrigger value="reclamaAqui" className="flex-1 text-lg py-1 px-6 text-center">Peticiones/Quejas/Reclamos</TabsTrigger>
             </TabsList>
