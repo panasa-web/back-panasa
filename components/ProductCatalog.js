@@ -9,6 +9,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "
 import { useToast } from "@/hooks/use-toast";
 
 export default function ProductCatalog() {
+  const BASE_URL = 'https://panasa-demo.orange-360.com'
   const { toast } = useToast()
   const [products, setProducts] = useState([])
   const [filteredProducts, setFilteredProducts] = useState([])
@@ -198,7 +199,7 @@ export default function ProductCatalog() {
           <Card key={product.código} className="flex flex-col">
             <CardContent className="p-4">
               <img 
-                src={product.img1} 
+                src={`${BASE_URL}${product.img1}`} 
                 alt={product.nombre}
                 className="w-full h-40 object-cover mb-4"
               />
