@@ -29,9 +29,15 @@ export async function DELETE(request, { params }) {
         );
     }
 
+    const serializedResult = {
+      ...result,
+      id: result.id.toString(),
+      createdAt: result.createdAt.toISOString()
+    };
+
     return NextResponse.json({ 
       message: 'Formulario eliminado correctamente',
-      result 
+      result: serializedResult  
     });
   } catch (error) {
     console.error('Error al eliminar:', error);

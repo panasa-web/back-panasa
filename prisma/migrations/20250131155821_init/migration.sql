@@ -1,6 +1,6 @@
 -- CreateTable
 CREATE TABLE "Product" (
-    "id" SERIAL NOT NULL,
+    "id" BIGSERIAL NOT NULL,
     "categoría" TEXT NOT NULL,
     "tipo" TEXT NOT NULL,
     "marca" TEXT NOT NULL,
@@ -10,6 +10,7 @@ CREATE TABLE "Product" (
     "diseños" TEXT[],
     "hojas" TEXT NOT NULL,
     "cantidadCaja" TEXT NOT NULL,
+    "heroImg" TEXT NOT NULL,
     "img1" TEXT NOT NULL,
     "img2" TEXT[],
     "texto" TEXT NOT NULL,
@@ -19,7 +20,7 @@ CREATE TABLE "Product" (
 
 -- CreateTable
 CREATE TABLE "CotizaAqui" (
-    "id" SERIAL NOT NULL,
+    "id" BIGSERIAL NOT NULL,
     "nombre" TEXT NOT NULL,
     "apellido" TEXT NOT NULL,
     "cargo" TEXT NOT NULL,
@@ -32,33 +33,44 @@ CREATE TABLE "CotizaAqui" (
     "correo" TEXT NOT NULL,
     "mensaje" TEXT NOT NULL,
     "preferencia" TEXT NOT NULL,
+    "productos" TEXT,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "CotizaAqui_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "Contactanos" (
-    "id" SERIAL NOT NULL,
+    "id" BIGSERIAL NOT NULL,
     "nombre" TEXT NOT NULL,
     "telefono" TEXT NOT NULL,
     "mensaje" TEXT NOT NULL,
     "apellido" TEXT,
     "correo" TEXT,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "Contactanos_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "ReclamaAqui" (
-    "id" SERIAL NOT NULL,
+    "id" BIGSERIAL NOT NULL,
     "nombre" TEXT NOT NULL,
     "apellido" TEXT NOT NULL,
     "ruc" TEXT NOT NULL,
     "telefono" TEXT NOT NULL,
-    "correo" TEXT NOT NULL,
     "mensaje" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "ReclamaAqui_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Categoria" (
+    "id" BIGSERIAL NOT NULL,
+    "nombre" TEXT NOT NULL,
+
+    CONSTRAINT "Categoria_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateIndex

@@ -44,9 +44,16 @@ export async function POST(request) {
       }
     });
 
+    const serializedForm = {
+      ...form,
+      id: form.id.toString(),
+      createdAt: form.createdAt.toISOString()
+    };
+
+
     return addCORSHeaders(
       NextResponse.json(
-        { message: 'Formulario enviado exitosamente', form },
+        { message: 'Formulario enviado exitosamente', form: serializedForm },
         { status: 201 }
       )
     );
@@ -66,7 +73,15 @@ export async function GET() {
     const forms = await prisma.cotizaAqui.findMany({
       orderBy: { createdAt: 'desc' }
     });
-    return addCORSHeaders(NextResponse.json(forms));
+
+    const serializedForms = forms.map(form => ({
+      ...form,
+      id: form.id.toString(),
+      createdAt: form.createdAt.toISOString()
+    }));
+
+
+    return addCORSHeaders(NextResponse.json(serializedForms));
   } catch (error) {
     console.error('Error al obtener los formularios:', error);
     return addCORSHeaders(

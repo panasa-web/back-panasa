@@ -4,9 +4,14 @@ import prisma from '../../../lib/prisma';
 export async function GET() {
   try {
     const products = await prisma.product.findMany();
-    
-    const response = NextResponse.json(products);
-    response.headers.set('Access-Control-Allow-Origin', '*');
+
+  
+    const serializedProducts = products.map(product => ({
+      ...product,
+      id: product.id.toString()
+    }));
+
+    const response = NextResponse.json(serializedProducts);    response.headers.set('Access-Control-Allow-Origin', '*');
     response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
     response.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
     return response;

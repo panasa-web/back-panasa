@@ -67,7 +67,17 @@ export async function POST(request) {
   try {
     const newProduct = await request.json();
     const product = await prisma.product.create({ data: newProduct });
-    const response = NextResponse.json({ message: 'Producto creado exitosamente', product }, { status: 201 });
+    
+    // Serializar el producto creado
+    const serializedProduct = {
+      ...product,
+      id: product.id.toString()
+    };
+
+    const response = NextResponse.json(
+      { message: 'Producto creado exitosamente', product: serializedProduct }, 
+      { status: 201 }
+    );
     response.headers.set('Access-Control-Allow-Origin', '*');
     response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
     response.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
@@ -99,7 +109,19 @@ export async function PUT(request, { params }) {
       data: updatedProduct,
     });
 
-    return NextResponse.json({ message: 'Producto actualizado correctamente', product }, { status: 200 });
+    // Serializar el producto actualizado
+    const serializedProduct = {
+      ...product,
+      id: product.id.toString()
+    };
+
+    const response = NextResponse.json(
+      { message: 'Producto actualizado exitosamente', product: serializedProduct }
+    );
+    response.headers.set('Access-Control-Allow-Origin', '*');
+    response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+    response.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    return response;
   } catch (error) {
     console.error('Error al actualizar el producto:', error);
     return NextResponse.json({ message: 'Error al actualizar el producto', error: error.message }, { status: 500 });
