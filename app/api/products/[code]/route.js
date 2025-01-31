@@ -17,7 +17,15 @@ export async function GET(request, { params }) {
           }
         }
       });
-      const response = NextResponse.json(products);
+
+      const serializedProducts = products.map(product => ({
+        ...product,
+        id: product.id.toString(),
+        diseños: typeof product.diseños === 'string' ? product.diseños.split(',') : product.diseños,
+        img2: typeof product.img2 === 'string' ? product.img2.split(',') : product.img2
+      }));
+
+      const response = NextResponse.json(serializedProducts);
       response.headers.set('Access-Control-Allow-Origin', '*');
       response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
       response.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
@@ -34,7 +42,15 @@ export async function GET(request, { params }) {
           }
         }
       });
-      const response = NextResponse.json(products);
+
+      const serializedProducts = products.map(product => ({
+        ...product,
+        id: product.id.toString(),
+        diseños: typeof product.diseños === 'string' ? product.diseños.split(',') : product.diseños,
+        img2: typeof product.img2 === 'string' ? product.img2.split(',') : product.img2
+      }));
+
+      const response = NextResponse.json(serializedProducts);
       response.headers.set('Access-Control-Allow-Origin', '*');
       response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
       response.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
@@ -46,7 +62,15 @@ export async function GET(request, { params }) {
     if (!product) {
       return NextResponse.json({ message: 'Producto no encontrado' }, { status: 404 });
     }
-    const response = NextResponse.json(product);
+
+    const serializedProduct = {
+      ...product,
+      id: product.id.toString(),
+      diseños: typeof product.diseños === 'string' ? product.diseños.split(',') : product.diseños,
+      img2: typeof product.img2 === 'string' ? product.img2.split(',') : product.img2
+    };
+
+    const response = NextResponse.json(serializedProduct);
     response.headers.set('Access-Control-Allow-Origin', '*');
     response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
     response.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization');

@@ -8,7 +8,9 @@ export async function GET() {
   
     const serializedProducts = products.map(product => ({
       ...product,
-      id: product.id.toString()
+      id: product.id.toString(),
+      diseños: typeof product.diseños === 'string' ? product.diseños.split(',') : product.diseños,
+      img2: typeof product.img2 === 'string' ? product.img2.split(',') : product.img2
     }));
 
     const response = NextResponse.json(serializedProducts);    response.headers.set('Access-Control-Allow-Origin', '*');
