@@ -1,73 +1,23 @@
 import { NextResponse } from 'next/server';
-import prisma from '../../../../lib/prisma';
+import supabase from '../../../../lib/supabase';
 
 export async function GET(request, { params }) {
   try {
-    const { searchParams } = new URL(request.url);
-    const searchName = searchParams.get('name');
-    const searchCode = searchParams.get('code');
+    const { data, error } = await supabase
+      .from('Product')
+      .select('*')
+      .eq('código', params.code)
+      .single();
 
-    // Búsqueda por nombre
-    if (searchName) {
-      const products = await prisma.product.findMany({
-        where: {
-          nombre: {
-            contains: searchName,
-            mode: 'insensitive'
-          }
-        }
-      });
-
-      const serializedProducts = products.map(product => ({
-        ...product,
-        id: product.id.toString(),
-        diseños: typeof product.diseños === 'string' ? product.diseños.split(',') : product.diseños,
-        img2: typeof product.img2 === 'string' ? product.img2.split(',') : product.img2
-      }));
-
-      const response = NextResponse.json(serializedProducts);
-      response.headers.set('Access-Control-Allow-Origin', '*');
-      response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-      response.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-      return response;
-    }
-
-    // Búsqueda por código en searchParams
-    if (searchCode) {
-      const products = await prisma.product.findMany({
-        where: {
-          código: {
-            contains: searchCode,
-            mode: 'insensitive'
-          }
-        }
-      });
-
-      const serializedProducts = products.map(product => ({
-        ...product,
-        id: product.id.toString(),
-        diseños: typeof product.diseños === 'string' ? product.diseños.split(',') : product.diseños,
-        img2: typeof product.img2 === 'string' ? product.img2.split(',') : product.img2
-      }));
-
-      const response = NextResponse.json(serializedProducts);
-      response.headers.set('Access-Control-Allow-Origin', '*');
-      response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-      response.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-      return response;
-    }
-
-    // Búsqueda por código en params (original)
-    const product = await prisma.product.findUnique({ where: { código: params.code } });
-    if (!product) {
+    if (error) throw error;
+    if (!data) {
       return NextResponse.json({ message: 'Producto no encontrado' }, { status: 404 });
     }
 
     const serializedProduct = {
-      ...product,
-      id: product.id.toString(),
-      diseños: typeof product.diseños === 'string' ? product.diseños.split(',') : product.diseños,
-      img2: typeof product.img2 === 'string' ? product.img2.split(',') : product.img2
+      ...data,
+      diseños: Array.isArray(data.diseños) ? data.diseños : data.diseños ? data.diseños.split(',') : [],
+      img2: Array.isArray(data.img2) ? data.img2 : data.img2 ? data.img2.split(',') : []
     };
 
     const response = NextResponse.json(serializedProduct);
@@ -76,30 +26,32 @@ export async function GET(request, { params }) {
     response.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
     return response;
   } catch (error) {
-    console.error('Error al obtener el producto:', error);
-    const response = NextResponse.json({ message: 'Error al obtener el producto' }, { status: 500 });
-    response.headers.set('Access-Control-Allow-Origin', '*');
-    response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-    response.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-    return response;
+    console.error('Error:', error);
+    return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
-
-// ... resto del código existente ...
 
 export async function POST(request) {
   try {
     const newProduct = await request.json();
-    const product = await prisma.product.create({ data: newProduct });
     
-    // Serializar el producto creado
-    const serializedProduct = {
-      ...product,
-      id: product.id.toString()
+    // Format arrays before inserting
+    const formattedProduct = {
+      ...newProduct,
+      diseños: Array.isArray(newProduct.diseños) ? newProduct.diseños : [],
+      img2: Array.isArray(newProduct.img2) ? newProduct.img2 : []
     };
 
+    const { data, error } = await supabase
+      .from('Product')
+      .insert(formattedProduct)
+      .select()
+      .single();
+
+    if (error) throw error;
+
     const response = NextResponse.json(
-      { message: 'Producto creado exitosamente', product: serializedProduct }, 
+      { message: 'Producto creado exitosamente', product: data },
       { status: 201 }
     );
     response.headers.set('Access-Control-Allow-Origin', '*');
@@ -107,12 +59,8 @@ export async function POST(request) {
     response.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
     return response;
   } catch (error) {
-    console.error('Error al crear el producto:', error);
-    const response = NextResponse.json({ message: 'Error al crear el producto' }, { status: 500 });
-    response.headers.set('Access-Control-Allow-Origin', '*');
-    response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-    response.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-    return response;
+    console.error('Error:', error);
+    return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
 
@@ -121,59 +69,58 @@ export async function PUT(request, { params }) {
     const code = params.code;
     const updatedProduct = await request.json();
 
-    console.log('Código del producto:', code);
-    console.log('Datos recibidos:', updatedProduct);
-
     if (!updatedProduct) {
       return NextResponse.json({ message: 'No se proporcionaron datos para actualizar' }, { status: 400 });
     }
 
-    const product = await prisma.product.update({
-      where: { código: code },
-      data: updatedProduct,
-    });
-
-    // Serializar el producto actualizado
-    const serializedProduct = {
-      ...product,
-      id: product.id.toString()
+    const formattedProduct = {
+      ...updatedProduct,
+      diseños: Array.isArray(updatedProduct.diseños) ? updatedProduct.diseños : [],
+      img2: Array.isArray(updatedProduct.img2) ? updatedProduct.img2 : []
     };
 
+    const { data, error } = await supabase
+      .from('Product')
+      .update(formattedProduct)
+      .eq('código', code)
+      .select()
+      .single();
+
+    if (error) throw error;
+
     const response = NextResponse.json(
-      { message: 'Producto actualizado exitosamente', product: serializedProduct }
+      { message: 'Producto actualizado exitosamente', product: data }
     );
     response.headers.set('Access-Control-Allow-Origin', '*');
     response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
     response.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
     return response;
   } catch (error) {
-    console.error('Error al actualizar el producto:', error);
-    return NextResponse.json({ message: 'Error al actualizar el producto', error: error.message }, { status: 500 });
+    console.error('Error:', error);
+    return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
 
-
-
-
 export async function DELETE(request, { params }) {
   try {
-    await prisma.product.delete({ where: { código: params.code } });
+    const { error } = await supabase
+      .from('Product')
+      .delete()
+      .eq('código', params.code);
+
+    if (error) throw error;
+
     const response = NextResponse.json({ message: 'Producto eliminado exitosamente' });
     response.headers.set('Access-Control-Allow-Origin', '*');
     response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
     response.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
     return response;
   } catch (error) {
-    console.error('Error al eliminar el producto:', error);
-    const response = NextResponse.json({ message: 'Error al eliminar el producto' }, { status: 500 });
-    response.headers.set('Access-Control-Allow-Origin', '*');
-    response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-    response.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-    return response;
+    console.error('Error:', error);
+    return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
 
-// Manejar solicitudes OPTIONS para CORS
 export async function OPTIONS() {
   const response = NextResponse.json({});
   response.headers.set('Access-Control-Allow-Origin', '*');

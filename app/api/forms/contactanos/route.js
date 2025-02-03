@@ -1,6 +1,6 @@
 // ruta: app/api/forms/contactanos/route.js
 import { NextResponse } from 'next/server';
-import prisma from '../../../../lib/prisma';
+import supabase from '../../../../lib/supabase';
 
 function addCORSHeaders(response) {
   response.headers.set('Access-Control-Allow-Origin', 'https://panasa-demo.orange-360.com');
@@ -17,29 +17,34 @@ export async function POST(request) {
   try {
     const newForm = await request.json();
     
+    // Solo validar campos obligatorios
     if (!newForm || !newForm.nombre || !newForm.telefono || !newForm.mensaje) {
       return addCORSHeaders(
         NextResponse.json(
-          { message: 'Faltan campos requeridos' },
+          { message: 'Faltan campos requeridos (nombre, teléfono y mensaje son obligatorios)' },
           { status: 400 }
         )
       );
     }
 
-    const form = await prisma.contactanos.create({
-      data: {
+    const { data: form, error } = await supabase
+      .from('Contactanos')
+      .insert([{
         nombre: newForm.nombre,
-        apellido: newForm.apellido || '',
+        apellido: newForm.apellido ?? null, // Usar null si no existe
         telefono: newForm.telefono,
-        correo: newForm.correo || '',
+        correo: newForm.correo ?? null, // Usar null si no existe
         mensaje: newForm.mensaje
-      }
-    });
+      }])
+      .select()
+      .single();
+
+    if (error) throw error;
 
     const serializedForm = {
       ...form,
       id: form.id.toString(),
-      createdAt: form.createdAt.toISOString()
+      createdAt: new Date(form.createdAt).toISOString()
     };
 
     return addCORSHeaders(
@@ -61,14 +66,17 @@ export async function POST(request) {
 
 export async function GET() {
   try {
-    const forms = await prisma.contactanos.findMany({
-      orderBy: { createdAt: 'desc' }
-    });
+    const { data: forms, error } = await supabase
+      .from('Contactanos')
+      .select('*')
+      .order('createdAt', { ascending: false });
+
+    if (error) throw error;
 
     const serializedForms = forms.map(form => ({
       ...form,
       id: form.id.toString(),
-      createdAt: form.createdAt.toISOString()
+      createdAt: new Date(form.createdAt).toISOString()
     }));
 
     return addCORSHeaders(NextResponse.json(serializedForms));
@@ -89,20 +97,25 @@ export async function OPTIONS() {
   );
 }
 
-
 export async function DELETE(request, { params }) {
   try {
-    const id = parseInt(params.id);
-    await prisma.contactanos.delete({
-      where: { id }
-    });
+    const { error } = await supabase
+      .from('Contactanos')
+      .delete()
+      .eq('id', parseInt(params.id));
 
-    return NextResponse.json({ message: 'Formulario eliminado' });
+    if (error) throw error;
+
+    return addCORSHeaders(
+      NextResponse.json({ message: 'Formulario eliminado exitosamente' })
+    );
   } catch (error) {
     console.error('Error al eliminar:', error);
-    return NextResponse.json(
-      { message: 'Error al eliminar el formulario' },
-      { status: 500 }
+    return addCORSHeaders(
+      NextResponse.json(
+        { message: 'Error al eliminar el formulario' },
+        { status: 500 }
+      )
     );
   }
 }

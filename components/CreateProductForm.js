@@ -6,11 +6,15 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
-import { useToast } from "@/hooks/use-toast";
+import { useToast } from "@/hooks/use-toast"
+import { Plus, Minus } from 'lucide-react' // Import icons
+import { useRouter } from 'next/navigation'
 
 export default function CreateProductForm() {
   const { toast } = useToast()
   const [isLoading, setIsLoading] = useState(false)
+  const [diseñosInputs, setDiseñosInputs] = useState(['']) // Array for diseños inputs
+  const [img2Inputs, setImg2Inputs] = useState(['']) // Array for img2 inputs
   const [product, setProduct] = useState({
     categoría: '',
     tipo: '',
@@ -26,13 +30,49 @@ export default function CreateProductForm() {
     texto: '',
     heroImg: '' // Nuevo campo añadido
   })
+  const router = useRouter()
 
+  // Handle single image inputs
   const handleChange = (e) => {
     const { name, value } = e.target
-    if (name === 'img2' || name === 'diseños') {
-      setProduct({ ...product, [name]: value.split(',') })
+    setProduct({ ...product, [name]: value.trim() })
+  }
+
+  // Handle diseños array inputs
+  const handleDiseñosChange = (index, value) => {
+    const newDiseñosInputs = [...diseñosInputs]
+    newDiseñosInputs[index] = value.trim()
+    setDiseñosInputs(newDiseñosInputs)
+    setProduct({ ...product, diseños: newDiseñosInputs.filter(Boolean) })
+  }
+
+  // Handle img2 array inputs
+  const handleImg2Change = (index, value) => {
+    const newImg2Inputs = [...img2Inputs]
+    newImg2Inputs[index] = value.trim()
+    setImg2Inputs(newImg2Inputs)
+    setProduct({ ...product, img2: newImg2Inputs.filter(Boolean) })
+  }
+
+  // Add new input field
+  const addInput = (type) => {
+    if (type === 'diseños') {
+      setDiseñosInputs([...diseñosInputs, ''])
     } else {
-      setProduct({ ...product, [name]: value })
+      setImg2Inputs([...img2Inputs, ''])
+    }
+  }
+
+  // Remove input field
+  const removeInput = (type, index) => {
+    if (type === 'diseños') {
+      const newInputs = diseñosInputs.filter((_, i) => i !== index)
+      setDiseñosInputs(newInputs)
+      setProduct({ ...product, diseños: newInputs.filter(Boolean) })
+    } else {
+      const newInputs = img2Inputs.filter((_, i) => i !== index)
+      setImg2Inputs(newInputs)
+      setProduct({ ...product, img2: newInputs.filter(Boolean) })
     }
   }
 
@@ -56,14 +96,22 @@ export default function CreateProductForm() {
       return
     }
 
+    const formattedProduct = {
+      ...product,
+      img1: product.img1.trim(),
+      heroImg: product.heroImg.trim(),
+      diseños: diseñosInputs.filter(Boolean),
+      img2: img2Inputs.filter(Boolean)
+    }
+
     setIsLoading(true)
     try {
-      const response = await fetch('/api/products/[code]', {
+      const response = await fetch(`/api/products/${product.código}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify(product)
+        body: JSON.stringify(formattedProduct)
       })
 
       if (response.ok) {
@@ -87,6 +135,10 @@ export default function CreateProductForm() {
           texto: '',
           heroImg: ''
         })
+        setDiseñosInputs([''])
+        setImg2Inputs([''])
+        router.push('/productos')
+        router.refresh()
       } else {
         throw new Error('Error al crear el producto')
       }
@@ -216,27 +268,69 @@ export default function CreateProductForm() {
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="diseños">Diseños (separados por coma)</Label>
-        <Textarea
-          id="diseños"
-          name="diseños"
-          value={Array.isArray(product.diseños) ? product.diseños.join(',') : ''}
-          onChange={handleChange}
-          placeholder="Ingresa las URLs de los diseños separadas por comas"
-          rows={3}
-        />
+        <div className="flex items-center justify-between">
+          <Label>Diseños</Label>
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            onClick={() => addInput('diseños')}
+          >
+            <Plus className="h-4 w-4" />
+          </Button>
+        </div>
+        {diseñosInputs.map((input, index) => (
+          <div key={index} className="flex gap-2">
+            <Input
+              value={input}
+              onChange={(e) => handleDiseñosChange(index, e.target.value)}
+              placeholder={`Pega el link del diseño ${index + 1}`}
+            />
+            {diseñosInputs.length > 1 && (
+              <Button
+                type="button"
+                variant="outline"
+                size="icon"
+                onClick={() => removeInput('diseños', index)}
+              >
+                <Minus className="h-4 w-4" />
+              </Button>
+            )}
+          </div>
+        ))}
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="img2">Imágenes Adicionales (separadas por coma)</Label>
-        <Textarea
-          id="img2"
-          name="img2"
-          value={Array.isArray(product.img2) ? product.img2.join(',') : ''}
-          onChange={handleChange}
-          placeholder="Ingresa las URLs de las imágenes adicionales separadas por comas"
-          rows={3}
-        />
+        <div className="flex items-center justify-between">
+          <Label>Imágenes Adicionales</Label>
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            onClick={() => addInput('img2')}
+          >
+            <Plus className="h-4 w-4" />
+          </Button>
+        </div>
+        {img2Inputs.map((input, index) => (
+          <div key={index} className="flex gap-2">
+            <Input
+              value={input}
+              onChange={(e) => handleImg2Change(index, e.target.value)}
+              placeholder={`Pega el link de la imagen adicional ${index + 1}`}
+            />
+            {img2Inputs.length > 1 && (
+              <Button
+                type="button"
+                variant="outline"
+                size="icon"
+                onClick={() => removeInput('img2', index)}
+              >
+                <Minus className="h-4 w-4" />
+              </Button>
+            )}
+          </div>
+        ))}
       </div>
 
       <div className="space-y-2">

@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import prisma from '../../../../lib/prisma';
+import supabase from '../../../../lib/supabase';
 
 function addCORSHeaders(response) {
   response.headers.set('Access-Control-Allow-Origin', 'https://panasa-demo.orange-360.com');
@@ -26,8 +26,9 @@ export async function POST(request) {
       );
     }
 
-    const form = await prisma.cotizaAqui.create({
-      data: {
+    const { data: form, error } = await supabase
+      .from('CotizaAqui')
+      .insert([{
         nombre: newForm.nombre,
         apellido: newForm.apellido,
         cargo: newForm.cargo,
@@ -40,16 +41,18 @@ export async function POST(request) {
         correo: newForm.correo,
         mensaje: newForm.mensaje,
         preferencia: newForm.preferencia,
-        productos: JSON.stringify(newForm.productos || [])
-      }
-    });
+        productos: newForm.productos || null
+      }])
+      .select()
+      .single();
+
+    if (error) throw error;
 
     const serializedForm = {
       ...form,
       id: form.id.toString(),
-      createdAt: form.createdAt.toISOString()
+      createdAt: new Date(form.createdAt).toISOString()
     };
-
 
     return addCORSHeaders(
       NextResponse.json(
@@ -70,16 +73,18 @@ export async function POST(request) {
 
 export async function GET() {
   try {
-    const forms = await prisma.cotizaAqui.findMany({
-      orderBy: { createdAt: 'desc' }
-    });
+    const { data: forms, error } = await supabase
+      .from('CotizaAqui')
+      .select('*')
+      .order('createdAt', { ascending: false });
+
+    if (error) throw error;
 
     const serializedForms = forms.map(form => ({
       ...form,
       id: form.id.toString(),
-      createdAt: form.createdAt.toISOString()
+      createdAt: new Date(form.createdAt).toISOString()
     }));
-
 
     return addCORSHeaders(NextResponse.json(serializedForms));
   } catch (error) {

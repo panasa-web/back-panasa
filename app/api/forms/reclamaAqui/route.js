@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import prisma from '../../../../lib/prisma';
+import supabase from '../../../../lib/supabase';
 
 function addCORSHeaders(response) {
   response.headers.set('Access-Control-Allow-Origin', 'https://panasa-demo.orange-360.com');
@@ -25,20 +25,24 @@ export async function POST(request) {
       );
     }
 
-    const form = await prisma.reclamaAqui.create({
-      data: {
+    const { data: form, error } = await supabase
+      .from('ReclamaAqui')
+      .insert([{
         nombre: newForm.nombre,
         apellido: newForm.apellido,
         ruc: newForm.ruc,
         telefono: newForm.telefono,
         mensaje: newForm.mensaje
-      }
-    });
+      }])
+      .select()
+      .single();
+
+    if (error) throw error;
 
     const serializedForm = {
       ...form,
       id: form.id.toString(),
-      createdAt: form.createdAt.toISOString()
+      createdAt: new Date(form.createdAt).toISOString()
     };
 
     return addCORSHeaders(
@@ -60,14 +64,17 @@ export async function POST(request) {
 
 export async function GET() {
   try {
-    const forms = await prisma.reclamaAqui.findMany({
-      orderBy: { createdAt: 'desc' }
-    });
+    const { data: forms, error } = await supabase
+      .from('ReclamaAqui')
+      .select('*')
+      .order('createdAt', { ascending: false });
+
+    if (error) throw error;
 
     const serializedForms = forms.map(form => ({
       ...form,
       id: form.id.toString(),
-      createdAt: form.createdAt.toISOString()
+      createdAt: new Date(form.createdAt).toISOString()
     }));
 
     return addCORSHeaders(NextResponse.json(serializedForms));
@@ -83,9 +90,11 @@ export async function GET() {
 }
 
 export async function OPTIONS() {
-  return addCORSHeaders(
-    NextResponse.json({}, { status: 200 })
-  );
+  const response = NextResponse.json({});
+  response.headers.set('Access-Control-Allow-Origin', 'https://panasa-demo.orange-360.com');
+  response.headers.set('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+  response.headers.set('Access-Control-Allow-Headers', 'Content-Type');
+  return response;
 }
 
 function handleOptions() {
@@ -93,4 +102,3 @@ function handleOptions() {
     NextResponse.json({}, { status: 200 })
   );
 }
-
