@@ -35,7 +35,7 @@ export default function CreateProductForm() {
   // Handle single image inputs
   const handleChange = (e) => {
     const { name, value } = e.target
-    setProduct({ ...product, [name]: value.trim() })
+    setProduct({ ...product, [name]: value }) // Remover trim()
   }
 
   // Handle diseños array inputs
@@ -87,21 +87,23 @@ export default function CreateProductForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    if (!validateForm()) {
-      toast({
-        title: "Error",
-        description: "Por favor completa todos los campos",
-        variant: "destructive"
-      })
-      return
-    }
-
+    
     const formattedProduct = {
       ...product,
+      // Aplicar trim() aquí, al enviar
+      categoría: product.categoría.trim(),
+      tipo: product.tipo.trim(),
+      marca: product.marca.trim(),
+      nombre: product.nombre.trim(),
+      código: product.código.trim(),
+      modelo: product.modelo.trim(),
+      hojas: product.hojas.trim(),
+      cantidadCaja: product.cantidadCaja.trim(),
       img1: product.img1.trim(),
       heroImg: product.heroImg.trim(),
-      diseños: diseñosInputs.filter(Boolean),
-      img2: img2Inputs.filter(Boolean)
+      texto: product.texto.trim(),
+      diseños: diseñosInputs.filter(Boolean).map(d => d.trim()),
+      img2: img2Inputs.filter(Boolean).map(i => i.trim())
     }
 
     setIsLoading(true)
