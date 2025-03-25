@@ -6,6 +6,7 @@ function addCORSHeaders(response) {
   response.headers.set('Access-Control-Allow-Origin', 'https://panasa-demo.orange-360.com');
   response.headers.set('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
   response.headers.set('Access-Control-Allow-Headers', 'Content-Type, Origin');
+  response.headers.set('Content-Type', 'application/json'); // Añadir esta línea
   return response;
 }
 
