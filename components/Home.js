@@ -46,20 +46,7 @@ export default function Home() {
           </button>
         </div>
         
-        <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-          <Link href="/productos">
-            <Card className="p-6 hover:shadow-lg transition-shadow cursor-pointer bg-white border-sky-200">
-              <div className="text-center">
-                <h2 className="text-2xl font-semibold text-[#2200CC] mb-3">
-                  Gestionar Productos
-                </h2>
-                <p className="text-black">
-                  Administra el catálogo de productos
-                </p>
-              </div>
-            </Card>
-          </Link>
-
+        <div className="flex justify-center">
           <Link href="/formularios">
             <Card className="p-6 hover:shadow-lg transition-shadow cursor-pointer bg-white border-sky-200">
               <div className="text-center">
