@@ -4,17 +4,21 @@ import supabase from '../../../../lib/supabase';
 function addCORSHeaders(response) {
   response.headers.set('Access-Control-Allow-Origin', 'https://panasa-demo.orange-360.com');
   response.headers.set('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-  response.headers.set('Access-Control-Allow-Headers', 'Content-Type');
+  response.headers.set('Access-Control-Allow-Headers', 'Content-Type, Origin, Accept');
+  response.headers.set('Content-Type', 'application/json'); // Añadido
   return response;
 }
 
 export async function POST(request) {
+  console.log('Recibiendo solicitud POST');
+  
   if (request.method === 'OPTIONS') {
     return handleOptions();
   }
 
   try {
     const newForm = await request.json();
+    console.log('Datos recibidos:', newForm);
     
     if (!newForm || !newForm.nombre || !newForm.apellido || !newForm.ruc || !newForm.telefono || !newForm.mensaje) {
       return addCORSHeaders(
@@ -47,15 +51,23 @@ export async function POST(request) {
 
     return addCORSHeaders(
       NextResponse.json(
-        { message: 'Formulario enviado exitosamente', form: serializedForm },
+        {
+          success: true,
+          message: 'Formulario enviado exitosamente',
+          form: serializedForm
+        },
         { status: 201 }
       )
     );
   } catch (error) {
-    console.error('Error al enviar el formulario:', error);
+    console.error('Error al procesar:', error);
     return addCORSHeaders(
       NextResponse.json(
-        { message: 'Error al enviar el formulario' },
+        {
+          success: false,
+          message: 'Error al enviar el formulario',
+          error: error.message
+        },
         { status: 500 }
       )
     );
