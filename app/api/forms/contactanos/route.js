@@ -100,10 +100,15 @@ export async function OPTIONS() {
 
 export async function DELETE(request, { params }) {
   try {
+
+    console.log('DELETE Request params:', params);
+    console.log('Attempting to delete from table:', 'Contactanos');
+
     const { error } = await supabase
       .from('Contactanos')
       .delete()
-      .eq('id', parseInt(params.id));
+      .eq('id', parseInt(params.id))
+      .select();
 
     if (error) throw error;
 
