@@ -9,45 +9,42 @@ function addCORSHeaders(response) {
 }
 
 export async function DELETE(request, { params }) {
-  const { type, id } = params;
-  
   try {
-    let { data: result, error } = await supabase
-      .from(type)
+    // Wait for params to be resolved
+    const type = await params.type;
+    const id = await params.id;
+
+    console.log('DELETE Request params:', { type, id });
+    
+    // Convert type to proper case for table name
+    const tableName = type.charAt(0).toUpperCase() + type.slice(1);
+    console.log('Attempting to delete from table:', tableName);
+
+    const { error } = await supabase
+      .from(tableName)
       .delete()
       .eq('id', parseInt(id))
-      .select()
-      .single();
+      .select();
 
     if (error) {
-      if (error.code === 'PGRST116') {
-        return addCORSHeaders(
-          NextResponse.json(
-            { message: 'Tipo de formulario no válido' },
-            { status: 400 }
-          )
-        );
-      }
+      console.error('Supabase error:', error);
       throw error;
     }
 
-    const serializedResult = {
-      ...result,
-      id: result.id.toString(),
-      createdAt: new Date(result.createdAt).toISOString()
-    };
-
     return addCORSHeaders(
       NextResponse.json({ 
-        message: 'Formulario eliminado correctamente',
-        result: serializedResult
+        message: 'Formulario eliminado exitosamente',
+        deletedId: id 
       })
     );
   } catch (error) {
-    console.error('Error al eliminar:', error);
+    console.error('Error completo al eliminar:', error);
     return addCORSHeaders(
       NextResponse.json(
-        { message: 'Error al eliminar el formulario' },
+        { 
+          message: 'Error al eliminar el formulario',
+          error: error.message 
+        },
         { status: 500 }
       )
     );
