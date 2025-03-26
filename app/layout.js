@@ -8,8 +8,8 @@ const outfit = Outfit({
 });
 
 export const metadata = {
-  title: 'Gestión de Productos',
-  description: 'Aplicación para gestionar productos',
+  title: 'Gestión de Datos Papelera Nacional',
+  description: 'Aplicación para gestionar datos y formularios',
 }
 
 export default function RootLayout({ children }) {
