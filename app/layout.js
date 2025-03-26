@@ -1,5 +1,11 @@
 import './globals.css'
 import { UserProvider } from '@auth0/nextjs-auth0/client';
+import { Outfit } from 'next/font/google';
+
+const outfit = Outfit({ 
+  subsets: ['latin'],
+  variable: '--font-outfit',
+});
 
 export const metadata = {
   title: 'Gestión de Productos',
@@ -8,7 +14,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="es">
+    <html lang="en" className={outfit.variable}>
       <body>
         <UserProvider>
           {children}

@@ -151,27 +151,28 @@ export default function FormulariosList({ type }) {
     <div className="grid grid-cols-4 gap-6">
       <div className="col-span-1 space-y-6">
         <div className="space-y-2">
-          <h3 className="text-lg font-medium">Buscar</h3>
+          <h3 className="text-lg font-medium font-outfit">Buscar</h3>
           <Input
             placeholder="Buscar por nombre, ID o teléfono"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
+            className="font-outfit"
           />
         </div>
         
         <div className="space-y-2">
-          <h3 className="text-lg font-medium">Filtrar por fecha</h3>
+          <h3 className="text-lg font-medium font-outfit">Filtrar por fecha</h3>
           <Calendar
             mode="single"
             selected={selectedDate}
             onSelect={setSelectedDate}
-            className="rounded-md border"
+            className="rounded-md border font-outfit"
           />
           {selectedDate && (
             <Button 
               variant="outline" 
               onClick={() => setSelectedDate(null)}
-              className="w-full"
+              className="w-full font-outfit"
             >
               Limpiar fecha
             </Button>
@@ -183,18 +184,18 @@ export default function FormulariosList({ type }) {
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>ID</TableHead>
-              <TableHead>Nombre</TableHead>
-              <TableHead>Fecha</TableHead>
-              <TableHead>Mensaje</TableHead>
-              <TableHead className="text-right">Acciones</TableHead>
+              <TableHead className="font-outfit">ID</TableHead>
+              <TableHead className="font-outfit">Nombre</TableHead>
+              <TableHead className="font-outfit">Fecha</TableHead>
+              <TableHead className="font-outfit">Mensaje</TableHead>
+              <TableHead className="text-right font-outfit">Acciones</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {getCurrentPageItems().map((form) => (
               <TableRow 
                 key={form.id}
-                className="cursor-pointer hover:bg-slate-100"
+                className="cursor-pointer hover:bg-slate-100 font-outfit"
               >
                 <TableCell onClick={() => handleRowClick(form)}>{form.id}</TableCell>
                 <TableCell onClick={() => handleRowClick(form)}>{form.nombre}</TableCell>
@@ -213,6 +214,7 @@ export default function FormulariosList({ type }) {
                       setFormToDelete(form);
                       setShowDeleteAlert(true);
                     }}
+                    className="font-outfit"
                   >
                     Eliminar
                   </Button>
@@ -224,7 +226,7 @@ export default function FormulariosList({ type }) {
 
         <div className="mt-4">
           <Pagination>
-            <PaginationContent>
+            <PaginationContent className="font-outfit">
               <PaginationItem>
                 <PaginationPrevious 
                   onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
@@ -246,7 +248,7 @@ export default function FormulariosList({ type }) {
       </div>
 
       <AlertDialog open={showDeleteAlert} onOpenChange={setShowDeleteAlert}>
-        <AlertDialogContent>
+        <AlertDialogContent className="font-outfit">
           <AlertDialogHeader>
             <AlertDialogTitle>¿Estás seguro?</AlertDialogTitle>
             <AlertDialogDescription>
@@ -254,9 +256,9 @@ export default function FormulariosList({ type }) {
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Cancelar</AlertDialogCancel>
+            <AlertDialogCancel className="font-outfit">Cancelar</AlertDialogCancel>
             <AlertDialogAction
-              className="bg-red-600 hover:bg-red-700"
+              className="bg-red-600 hover:bg-red-700 font-outfit"
               onClick={() => {
                 handleDelete(formToDelete.id);
                 setShowDeleteAlert(false);
@@ -269,7 +271,7 @@ export default function FormulariosList({ type }) {
       </AlertDialog>
 
       <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
-        <DialogContent className="max-w-3xl max-h-[80vh] overflow-y-auto">
+        <DialogContent className="max-w-3xl max-h-[80vh] overflow-y-auto font-outfit">
           <DialogHeader>
             <DialogTitle className="text-center">Detalles del Formulario</DialogTitle>
             <DialogDescription className="text-center">

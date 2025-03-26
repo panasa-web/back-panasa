@@ -40,52 +40,64 @@ function AuthenticatedFormulariosContent() {
   }
 
   return (
-    <main className="min-h-screen bg-gradient-to-b from-sky-100 to-white relative flex items-center justify-center">
-      <div className="absolute inset-0">
-        <img 
-          src="https://i.ibb.co/85x9PHS/Dise-o-sin-t-tulo.png" 
-          alt="Background" 
-          className="w-full h-full object-cover opacity-30" 
-        />
-      </div>
-      <div className="relative container mx-auto px-4 py-8">
-        <Link href="/" className="absolute top-4 left-4 text-blue-900 hover:underline">
-          &larr; Regresar a la página principal
-        </Link>
-        <h1 className="text-4xl font-bold text-blue-900 text-center mb-8">Gestión de Formularios</h1>
-        <div className="max-w-4xl mx-auto mb-4">
-          <Tabs value={activeTab} onValueChange={setActiveTab}>
-            <TabsList className="flex w-full pr-8"> 
-              <TabsTrigger value="cotizaAqui" className="flex-1 text-lg py-1 px-6 text-center">Cotiza Aquí</TabsTrigger>
-              <TabsTrigger value="contactanos" className="flex-1 text-lg py-1 px-6 text-center">Contáctanos</TabsTrigger>
-              <TabsTrigger value="reclamaAqui" className="flex-1 text-lg py-1 px-6 text-center">Peticiones/Quejas/Reclamos</TabsTrigger>
-            </TabsList>
-          </Tabs>
-        </div>
-        <div className="w-full max-w-6xl mx-auto">
-          <Tabs value={activeTab} onValueChange={setActiveTab}>
-            <TabsContent value="cotizaAqui">
-              <div className="p-4 rounded-lg shadow-lg">
-                <div className="bg-white p-4 rounded-lg shadow-lg">
+    <main className="min-h-screen bg-white flex items-center justify-center p-8">
+      <div className="w-[90%] min-h-[80vh] mx-auto">
+        <div className="h-full bg-[#eeeeee] rounded-[40px] p-12">
+          <Link 
+            href="/" 
+            className="text-[#2100c8] hover:underline font-outfit font-bold mb-8 block"
+          >
+            &larr; Regresar a la página principal
+          </Link>
+          
+          <h1 className="text-5xl font-bold text-[#2100c8] text-center mb-8 font-outfit">
+            Gestión de Formularios
+          </h1>
+          
+          <div className="max-w-4xl mx-auto mb-4">
+            <Tabs value={activeTab} onValueChange={setActiveTab}>
+              <TabsList className="flex w-full bg-white p-1 rounded-[10px]"> 
+                <TabsTrigger 
+                  value="cotizaAqui" 
+                  className="rounded-[10px] flex-1 text-lg py-2 px-6 text-center font-outfit transition-all"
+                >
+                  COTIZA AQUÍ
+                </TabsTrigger>
+                <TabsTrigger 
+                  value="contactanos" 
+                  className="rounded-[10px] flex-1 text-lg py-2 px-6 text-center font-outfit transition-all"
+                >
+                  CONTÁCTANOS
+                </TabsTrigger>
+                <TabsTrigger 
+                  value="reclamaAqui" 
+                  className="rounded-[10px] flex-1 text-lg py-2 px-6 text-center font-outfit transition-all"
+                >
+                  PETICIONES/RECLAMOS
+                </TabsTrigger>
+              </TabsList>
+            </Tabs>
+          </div>
+
+          <div className="w-full max-w-6xl mx-auto">
+            <Tabs value={activeTab} onValueChange={setActiveTab}>
+              <TabsContent value="cotizaAqui">
+                <div className="bg-white p-6 rounded-lg shadow-sm">
                   <FormulariosList type="cotizaAqui" />
                 </div>
-              </div>
-            </TabsContent>
-            <TabsContent value="contactanos">
-              <div className="p-4 rounded-lg shadow-lg">
-                <div className="bg-white p-4 rounded-lg shadow-lg">
+              </TabsContent>
+              <TabsContent value="contactanos">
+                <div className="bg-white p-6 rounded-lg shadow-sm">
                   <FormulariosList type="contactanos" />
                 </div>
-              </div>
-            </TabsContent>
-            <TabsContent value="reclamaAqui">
-              <div className="p-4 rounded-lg shadow-lg">
-                <div className="bg-white p-4 rounded-lg shadow-lg">
+              </TabsContent>
+              <TabsContent value="reclamaAqui">
+                <div className="bg-white p-6 rounded-lg shadow-sm">
                   <FormulariosList type="reclamaAqui" />
                 </div>
-              </div>
-            </TabsContent>
-          </Tabs>
+              </TabsContent>
+            </Tabs>
+          </div>
         </div>
       </div>
     </main>

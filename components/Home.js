@@ -22,43 +22,36 @@ export default function Home() {
   }
 
   return (
-    <main className="min-h-screen bg-gradient-to-b from-sky-100 to-white relative flex items-center justify-center">
-      <div className="absolute inset-0">
-        <img 
-          src="https://i.ibb.co/85x9PHS/Dise-o-sin-t-tulo.png" 
-          alt="Background" 
-          className="w-full h-full object-cover opacity-30" 
-        />
-      </div>
-      <div className="relative container mx-auto px-4 py-16">
-        <h1 className="text-7xl font-bold text-black text-center mb-8">
-          Gestión de Datos Panasa
-        </h1>
+    <main className="min-h-screen bg-white flex items-center justify-center p-8">
+      <div className="w-[90%] h-[80vh] mx-auto">
+        <div className="h-full bg-[#eeeeee] rounded-[40px] p-12 flex flex-col justify-center">
+          <h1 className="text-[#2100c8] text-6xl font-bold mb-12 text-center font-outfit">
+            Gestión de Datos Panasa
+          </h1>
 
-        <div className="text-center mb-8">
-          <p className="text-xl font-semibold text-black mb-2">
-            Bienvenido, {user.name || user.email}
-          </p>
-          <button 
-            onClick={handleLogout} 
-            className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition">
-            Cerrar Sesión
-          </button>
-        </div>
-        
-        <div className="flex justify-center">
-          <Link href="/formularios">
-            <Card className="p-6 hover:shadow-lg transition-shadow cursor-pointer bg-white border-sky-200">
-              <div className="text-center">
-                <h2 className="text-2xl font-semibold text-[#2200CC] mb-3">
+          <div className="max-w-md mx-auto w-full">
+            <div className="text-center mb-8">
+              <p className="text-black text-2xl font-outfit mb-6">
+                Bienvenido, {user.name || user.email}
+              </p>
+              <button 
+                onClick={handleLogout} 
+                className="w-1/2 px-4 py-3 bg-[#2b2b2b] text-white font-outfit font-bold rounded-lg hover:bg-[#3b3b3b] transition mb-8">
+                Cerrar Sesión
+              </button>
+            </div>
+            
+            <div className="flex flex-col items-center">
+              <Link href="/formularios" className="w-3/4">
+                <button className="w-full bg-[#2100c8] text-white font-outfit font-bold text-xl py-4 px-6 rounded-lg hover:bg-[#1a0096] transition mb-0">
                   Gestionar Formularios
-                </h2>
-                <p className="text-black">
-                  Visualiza y administra los formularios recibidos
-                </p>
+                </button>
+              </Link>
+              <div className="w-3/4 bg-white rounded-lg p-4 text-[#2100c8] font-outfit text-center text-sm">
+                Visualiza y administra los formularios recibidos
               </div>
-            </Card>
-          </Link>
+            </div>
+          </div>
         </div>
       </div>
     </main>
